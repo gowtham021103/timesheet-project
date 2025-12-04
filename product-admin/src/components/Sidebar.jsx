@@ -1,12 +1,15 @@
-export default function Sidebar() {
+import { useState } from "react";
+
+export default function Sidebar({ toggleDarkMode }) {
+  const [open, setOpen] = useState(true);
+
   return (
-    <div className="sidebar">
-      <h2>Dashboard</h2>
+    <div className={`sidebar ${open ? "open" : "closed"}`}>
+      <h2>Menu</h2>
       <ul>
-        <li>Home</li>
+        <li>Dashboard</li>
+        <li>Timesheet</li>
         <li>Employees</li>
-        <li>Attendance</li>
-        <li>Settings</li>
       </ul>
     </div>
   );
