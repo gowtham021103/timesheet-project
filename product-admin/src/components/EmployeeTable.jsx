@@ -1,5 +1,6 @@
 import { useState } from "react";
 import SearchBar from "./SearchBar";
+import { IoMdSearch } from "react-icons/io";
 
 const employeesData = [
   { id: 1, name: "John Doe", role: "Developer", status: "Active" },
@@ -18,16 +19,17 @@ export default function EmployeeTable() {
   return (
     <>
       <SearchBar setSearch={setSearch} />
+      <IoMdSearch />
       <table>
         <thead>
-          <tr>
+          <tr className="table-head">
             <th>ID</th>
             <th>Name</th>
             <th>Role</th>
             <th>Status</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="table-body">
           {filtered.map((emp) => (
             <tr key={emp.id}>
               <td>{emp.id}</td>
