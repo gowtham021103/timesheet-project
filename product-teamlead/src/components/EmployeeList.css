@@ -1,0 +1,29 @@
+.employee-container {
+  padding: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+th, td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background: #0f172a;
+  color: white;
+}
+
+.active {
+  color: green;
+  font-weight: 600;
+}
+
+.leave {
+  color: orange;
+  font-weight: 600;
+}
