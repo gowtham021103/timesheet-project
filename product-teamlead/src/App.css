@@ -10,29 +10,16 @@ body {
   font-size: 16px;
   color: #475569;
   background-color: #f5f7fa;
-<<<<<<< HEAD
   overflow: hidden;
 }
 
-/* =======================================
-   MAIN LAYOUT — FIXED!
-======================================= */
+/* MAIN LAYOUT */
 .app-container {
-=======
-  overflow: hidden; /* prevents unwanted scroll glitch */
-}
-
-/* ============================
-   LAYOUT FIX
-=============================== */
-.layout {
->>>>>>> 9415b571d574ec9c719e5cec28a46f476714478f
   display: flex;
   height: 100vh;
   width: 100%;
 }
 
-<<<<<<< HEAD
 .main-content {
   flex: 1;
   overflow-y: auto;
@@ -40,20 +27,7 @@ body {
   background: #f5f7fa;
 }
 
-/* =======================================
-   SIDEBAR
-======================================= */
-=======
-.main {
-  flex: 1;
-  overflow-y: auto;
-  padding: 20px;
-}
-
-/* ============================
-   SIDEBAR
-=============================== */
->>>>>>> 9415b571d574ec9c719e5cec28a46f476714478f
+/* SIDEBAR */
 .sidebar {
   width: 250px;
   background: #011c47;
@@ -64,56 +38,6 @@ body {
   height: 100vh;
   position: relative;
 }
-<<<<<<< HEAD
-.projects-container {
-  padding: 20px;
-}
-
-.projects-title {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-.projects-table {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.projects-header,
-.projects-row {
-  display: grid;
-  grid-template-columns: 50px 180px 1fr 120px 150px 150px;
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
-}
-
-.projects-header {
-  background: #f0f0f0;
-  font-weight: bold;
-}
-
-.status-completed {
-  color: green;
-  font-weight: bold;
-}
-
-.status-progress {
-  color: orange;
-  font-weight: bold;
-}
-
-.status-pending {
-  color: red;
-  font-weight: bold;
-}
-
-.projects-row:hover {
-  background: #fafafa;
-}
-=======
->>>>>>> 9415b571d574ec9c719e5cec28a46f476714478f
 
 .sidebar.closed {
   width: 80px;
@@ -124,19 +48,11 @@ body {
   font-size: 20px;
 }
 
-<<<<<<< HEAD
-=======
-/* Remove default bullet style */
->>>>>>> 9415b571d574ec9c719e5cec28a46f476714478f
 .sidebar ul {
   list-style: none;
   padding-left: 0;
 }
 
-<<<<<<< HEAD
-=======
-/* Sidebar items */
->>>>>>> 9415b571d574ec9c719e5cec28a46f476714478f
 .sidebar li {
   padding: 12px 0;
   cursor: pointer;
@@ -144,19 +60,11 @@ body {
   transition: background 0.2s, padding-left 0.2s;
 }
 
-<<<<<<< HEAD
-=======
-/* Hover effect */
->>>>>>> 9415b571d574ec9c719e5cec28a46f476714478f
 .sidebar li:hover {
   background: rgba(255,255,255,0.1);
   padding-left: 10px;
 }
 
-<<<<<<< HEAD
-=======
-/* Sidebar link fix — now clickable! */
->>>>>>> 9415b571d574ec9c719e5cec28a46f476714478f
 .sidebar a {
   color: white;
   text-decoration: none;
@@ -168,15 +76,11 @@ body {
   color: #cfe4ff;
 }
 
-<<<<<<< HEAD
-/* =======================================
-   NAVBAR
-======================================= */
-=======
-/* ============================
-   NAVBAR
-=============================== */
->>>>>>> 9415b571d574ec9c719e5cec28a46f476714478f
+.sidebar a:focus {
+  outline: none;
+}
+
+/* NAVBAR */
 .navbar {
   background: #00445E;
   padding: 20px;
@@ -187,12 +91,6 @@ body {
   justify-content: space-between;
   align-items: center;
 }
-<<<<<<< HEAD
-.sidebar a:focus {
-  outline: none;
-}
-=======
->>>>>>> 9415b571d574ec9c719e5cec28a46f476714478f
 
 .navbar h3 {
   margin: 0;
@@ -208,15 +106,7 @@ body {
   padding-left: 7px;
 }
 
-<<<<<<< HEAD
-/* =======================================
-   DASHBOARD CARDS
-======================================= */
-=======
-/* ============================
-   DASHBOARD CARDS
-=============================== */
->>>>>>> 9415b571d574ec9c719e5cec28a46f476714478f
+/* DASHBOARD CARDS */
 .cards {
   display: flex;
   justify-content: center;
@@ -261,42 +151,28 @@ body {
   font-weight: bold;
   color: #0f172a;
 }
-<<<<<<< HEAD
+
+/* ASSIGN TASK FORM */
 .assign-task-form {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 items per row → 2 rows total */
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   margin-top: 20px;
   align-items: start;
 }
 
-/* Make label sit nicely above input */
 .assign-task-form > div {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
-/* Bigger Description field (optional, looks better) */
+/* Description field wider */
 .assign-task-form > div:nth-child(4) {
   grid-column: span 2;
 }
 
-/* Button nicely aligned */
-.assign-task-form > div:last-child {
-  align-self: end;
-}
-
-
-/* =======================================
-   TABLE DESIGN
-======================================= */
-=======
-
-/* ============================
-   TABLE DESIGN
-=============================== */
->>>>>>> 9415b571d574ec9c719e5cec28a46f476714478f
+/* TABLE DESIGN */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -335,15 +211,7 @@ table tbody tr:hover {
   font-weight: 600;
 }
 
-<<<<<<< HEAD
-/* =======================================
-   SEARCH INPUT
-======================================= */
-=======
-/* ============================
-   SEARCH INPUT
-=============================== */
->>>>>>> 9415b571d574ec9c719e5cec28a46f476714478f
+/* SEARCH INPUT */
 .search-input {
   width: 100%;
   max-width: 400px;
@@ -352,7 +220,7 @@ table tbody tr:hover {
   font-size: 14px;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
-  background: rgb(255, 255, 255);
+  background: white;
   color: #0f172a;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
@@ -367,46 +235,23 @@ table tbody tr:hover {
   color: #000a4d;
 }
 
-<<<<<<< HEAD
-/* =======================================
-   TEXT STYLE
-======================================= */
-.welcome-text {
-  font-size: 8vw; /* font size is 8% of viewport width */
-  max-font-size: 48px;
-  min-font-size: 24px;
-}
-
-
-.centered-frame {
-  display: flex;
-  justify-content: center;  /* center horizontally */
-  align-items: center;      /* center vertically */
-  height: calc(100vh - 60px); /* full viewport height minus some padding/navbar */
-}
-
+/* WELCOME FRAME */
 .welcome-text-framed {
-  font-size: 48px;          /* bigger font size */
+  font-size: 48px;
   font-weight: 700;
   color: #1e293b;
-  border: 3px solid #011c47; /* solid border with your sidebar color */
+  border: 3px solid #011c47;
   padding: 40px 60px;
   border-radius: 12px;
   text-align: center;
   font-family: 'roboto', sans-serif;
   background-color: #ffffff;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-=======
-/* ============================
-   TEXT
-=============================== */
-.welcome-text {
-  font-size: 25px;
-  font-weight: 600;
-  color: #1e293b;
-  margin-bottom: 20px;
-  text-align: center;
-  font-family: 'roboto', sans-serif;
-  padding: 30px;
->>>>>>> 9415b571d574ec9c719e5cec28a46f476714478f
+}
+
+.centered-frame {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 60px);
 }
