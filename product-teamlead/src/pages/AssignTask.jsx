@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { getProjects, createTask } from "../api/api";
-import { employees as sampleEmployees } from "../Sample-data"; // ✅ IMPORT SAMPLE DATA
-import sampleProjects from "../Sample-projects";   // adjust path if needed
+import { employees as sampleEmployees } from "../Sample-data";
+import sampleProjects from "../Sample-projects";
+import "./AssignTask.css";
 
 function AssignTask() {
   const [employees, setEmployees] = useState([]);
@@ -16,24 +17,32 @@ function AssignTask() {
   });
 
   useEffect(() => {
-    // ✅ Load sample employees instead of API
     setEmployees(sampleEmployees);
-
-    // Keep projects from API
-    // ✅ Load sample projects
-setProjects(sampleProjects);
-
+    setProjects(sampleProjects);
   }, []);
 
   const handleChange = (e) => {
-    setTask({ ...task, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    setTask({
+      ...task,
+      [name]: value,
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const payload = {
+      project: Number(task.project),
+      assigned_to: Number(task.assigned_to),
+      title: task.title,
+      description: task.description,
+      deadline: task.deadline, // already in YYYY-MM-DD from input
+    };
+
     try {
-      const res = await createTask(task);
+      await createTask(payload);
       alert("Task assigned successfully!");
 
       setTask({
@@ -43,10 +52,12 @@ setProjects(sampleProjects);
         description: "",
         deadline: "",
       });
-    } catch (error) {
-      console.error(error);
-      alert("Failed to assign task.");
-    }
+    } 
+    catch(error) {
+  console.error("Full Backend Error:", error.response?.data);
+  alert(JSON.stringify(error.response?.data, null, 2));
+}
+
   };
 
   return (
@@ -55,25 +66,32 @@ setProjects(sampleProjects);
 
       <form onSubmit={handleSubmit} className="assign-task-form">
 
+        {/* PROJECT */}
         <div>
           <label>Project</label>
-          <select name="project" value={task.project} onChange={handleChange}>
+          <select
+            name="project"
+            value={task.project}
+            onChange={handleChange}
+            required
+          >
             <option value="">Select Project</option>
             {projects.map((p) => (
-  <option key={p.id} value={p.title}>
-    {p.title}
-  </option>
-))}
-
+              <option key={p.id} value={p.id}>
+                {p.name}
+              </option>
+            ))}
           </select>
         </div>
 
+        {/* ASSIGN EMPLOYEE */}
         <div>
           <label>Assign To</label>
           <select
             name="assigned_to"
             value={task.assigned_to}
             onChange={handleChange}
+            required
           >
             <option value="">Select Employee</option>
             {employees.map((emp) => (
@@ -84,6 +102,7 @@ setProjects(sampleProjects);
           </select>
         </div>
 
+        {/* TITLE */}
         <div>
           <label>Task Title</label>
           <input
@@ -91,18 +110,22 @@ setProjects(sampleProjects);
             name="title"
             value={task.title}
             onChange={handleChange}
+            required
           />
         </div>
 
+        {/* DESCRIPTION */}
         <div>
           <label>Description</label>
           <textarea
             name="description"
             value={task.description}
             onChange={handleChange}
+            required
           />
         </div>
 
+        {/* DEADLINE */}
         <div>
           <label>Deadline</label>
           <input
@@ -110,13 +133,11 @@ setProjects(sampleProjects);
             name="deadline"
             value={task.deadline}
             onChange={handleChange}
+            required
           />
         </div>
 
-        <div>
-          <button type="submit">Assign Task</button>
-        </div>
-
+        <button type="submit">Assign Task</button>
       </form>
     </div>
   );
