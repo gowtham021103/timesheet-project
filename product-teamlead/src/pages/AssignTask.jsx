@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
+<<<<<<< HEAD
 import { getProjects, createTask } from "../api/api";
 import { employees as sampleEmployees } from "../Sample-data";
 import sampleProjects from "../Sample-projects";
 import "./AssignTask.css";
+=======
+import { getEmployees, getProjects, createTask } from "../api/api";
+>>>>>>> 9415b571d574ec9c719e5cec28a46f476714478f
 
 function AssignTask() {
   const [employees, setEmployees] = useState([]);
@@ -17,6 +21,7 @@ function AssignTask() {
   });
 
   useEffect(() => {
+<<<<<<< HEAD
     setEmployees(sampleEmployees);
     setProjects(sampleProjects);
   }, []);
@@ -28,10 +33,19 @@ function AssignTask() {
       ...task,
       [name]: value,
     });
+=======
+    getEmployees().then((res) => setEmployees(res.data));
+    getProjects().then((res) => setProjects(res.data));
+  }, []);
+
+  const handleChange = (e) => {
+    setTask({ ...task, [e.target.name]: e.target.value });
+>>>>>>> 9415b571d574ec9c719e5cec28a46f476714478f
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+<<<<<<< HEAD
 
     const payload = {
       project: Number(task.project),
@@ -45,6 +59,14 @@ function AssignTask() {
       await createTask(payload);
       alert("Task assigned successfully!");
 
+=======
+    
+    try {
+      const res = await createTask(task);
+      alert("Task assigned successfully!");
+
+      // Reset the form
+>>>>>>> 9415b571d574ec9c719e5cec28a46f476714478f
       setTask({
         project: "",
         assigned_to: "",
@@ -52,18 +74,27 @@ function AssignTask() {
         description: "",
         deadline: "",
       });
+<<<<<<< HEAD
     } 
     catch(error) {
   console.error("Full Backend Error:", error.response?.data);
   alert(JSON.stringify(error.response?.data, null, 2));
 }
 
+=======
+
+    } catch (error) {
+      console.error(error);
+      alert("Failed to assign task.");
+    }
+>>>>>>> 9415b571d574ec9c719e5cec28a46f476714478f
   };
 
   return (
     <div className="assign-task-container">
       <h2>Assign Task</h2>
 
+<<<<<<< HEAD
       <form onSubmit={handleSubmit} className="assign-task-form">
 
         {/* PROJECT */}
@@ -136,6 +167,65 @@ function AssignTask() {
             required
           />
         </div>
+=======
+      <form onSubmit={handleSubmit}>
+
+        {/* Project Selector */}
+        <label>Project</label>
+        <select
+          name="project"
+          value={task.project}
+          onChange={handleChange}
+        >
+          <option value="">Select Project</option>
+          {projects.map((p) => (
+            <option key={p.id} value={p.id}>
+              {p.name}
+            </option>
+          ))}
+        </select>
+
+        {/* Employee Selector */}
+        <label>Assign To</label>
+        <select
+          name="assigned_to"
+          value={task.assigned_to}
+          onChange={handleChange}
+        >
+          <option value="">Select Employee</option>
+          {employees.map((emp) => (
+            <option key={emp.id} value={emp.id}>
+              {emp.name}
+            </option>
+          ))}
+        </select>
+
+        {/* Title */}
+        <label>Task Title</label>
+        <input
+          type="text"
+          name="title"
+          value={task.title}
+          onChange={handleChange}
+        />
+
+        {/* Description */}
+        <label>Description</label>
+        <textarea
+          name="description"
+          value={task.description}
+          onChange={handleChange}
+        />
+
+        {/* Deadline */}
+        <label>Deadline</label>
+        <input
+          type="date"
+          name="deadline"
+          value={task.deadline}
+          onChange={handleChange}
+        />
+>>>>>>> 9415b571d574ec9c719e5cec28a46f476714478f
 
         <button type="submit">Assign Task</button>
       </form>

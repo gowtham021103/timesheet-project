@@ -10,6 +10,7 @@ body {
   font-size: 16px;
   color: #475569;
   background-color: #f5f7fa;
+<<<<<<< HEAD
   overflow: hidden;
 }
 
@@ -17,11 +18,21 @@ body {
    MAIN LAYOUT — FIXED!
 ======================================= */
 .app-container {
+=======
+  overflow: hidden; /* prevents unwanted scroll glitch */
+}
+
+/* ============================
+   LAYOUT FIX
+=============================== */
+.layout {
+>>>>>>> 9415b571d574ec9c719e5cec28a46f476714478f
   display: flex;
   height: 100vh;
   width: 100%;
 }
 
+<<<<<<< HEAD
 .main-content {
   flex: 1;
   overflow-y: auto;
@@ -32,6 +43,17 @@ body {
 /* =======================================
    SIDEBAR
 ======================================= */
+=======
+.main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+/* ============================
+   SIDEBAR
+=============================== */
+>>>>>>> 9415b571d574ec9c719e5cec28a46f476714478f
 .sidebar {
   width: 250px;
   background: #011c47;
@@ -42,6 +64,7 @@ body {
   height: 100vh;
   position: relative;
 }
+<<<<<<< HEAD
 .projects-container {
   padding: 20px;
 }
@@ -89,6 +112,8 @@ body {
 .projects-row:hover {
   background: #fafafa;
 }
+=======
+>>>>>>> 9415b571d574ec9c719e5cec28a46f476714478f
 
 .sidebar.closed {
   width: 80px;
@@ -99,11 +124,19 @@ body {
   font-size: 20px;
 }
 
+<<<<<<< HEAD
+=======
+/* Remove default bullet style */
+>>>>>>> 9415b571d574ec9c719e5cec28a46f476714478f
 .sidebar ul {
   list-style: none;
   padding-left: 0;
 }
 
+<<<<<<< HEAD
+=======
+/* Sidebar items */
+>>>>>>> 9415b571d574ec9c719e5cec28a46f476714478f
 .sidebar li {
   padding: 12px 0;
   cursor: pointer;
@@ -111,11 +144,19 @@ body {
   transition: background 0.2s, padding-left 0.2s;
 }
 
+<<<<<<< HEAD
+=======
+/* Hover effect */
+>>>>>>> 9415b571d574ec9c719e5cec28a46f476714478f
 .sidebar li:hover {
   background: rgba(255,255,255,0.1);
   padding-left: 10px;
 }
 
+<<<<<<< HEAD
+=======
+/* Sidebar link fix — now clickable! */
+>>>>>>> 9415b571d574ec9c719e5cec28a46f476714478f
 .sidebar a {
   color: white;
   text-decoration: none;
@@ -127,9 +168,15 @@ body {
   color: #cfe4ff;
 }
 
+<<<<<<< HEAD
 /* =======================================
    NAVBAR
 ======================================= */
+=======
+/* ============================
+   NAVBAR
+=============================== */
+>>>>>>> 9415b571d574ec9c719e5cec28a46f476714478f
 .navbar {
   background: #00445E;
   padding: 20px;
@@ -140,9 +187,12 @@ body {
   justify-content: space-between;
   align-items: center;
 }
+<<<<<<< HEAD
 .sidebar a:focus {
   outline: none;
 }
+=======
+>>>>>>> 9415b571d574ec9c719e5cec28a46f476714478f
 
 .navbar h3 {
   margin: 0;
@@ -158,9 +208,15 @@ body {
   padding-left: 7px;
 }
 
+<<<<<<< HEAD
 /* =======================================
    DASHBOARD CARDS
 ======================================= */
+=======
+/* ============================
+   DASHBOARD CARDS
+=============================== */
+>>>>>>> 9415b571d574ec9c719e5cec28a46f476714478f
 .cards {
   display: flex;
   justify-content: center;
@@ -205,6 +261,7 @@ body {
   font-weight: bold;
   color: #0f172a;
 }
+<<<<<<< HEAD
 .assign-task-form {
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 3 items per row → 2 rows total */
@@ -234,6 +291,12 @@ body {
 /* =======================================
    TABLE DESIGN
 ======================================= */
+=======
+
+/* ============================
+   TABLE DESIGN
+=============================== */
+>>>>>>> 9415b571d574ec9c719e5cec28a46f476714478f
 table {
   width: 100%;
   border-collapse: collapse;
@@ -272,9 +335,15 @@ table tbody tr:hover {
   font-weight: 600;
 }
 
+<<<<<<< HEAD
 /* =======================================
    SEARCH INPUT
 ======================================= */
+=======
+/* ============================
+   SEARCH INPUT
+=============================== */
+>>>>>>> 9415b571d574ec9c719e5cec28a46f476714478f
 .search-input {
   width: 100%;
   max-width: 400px;
@@ -298,6 +367,7 @@ table tbody tr:hover {
   color: #000a4d;
 }
 
+<<<<<<< HEAD
 /* =======================================
    TEXT STYLE
 ======================================= */
@@ -326,4 +396,17 @@ table tbody tr:hover {
   font-family: 'roboto', sans-serif;
   background-color: #ffffff;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+=======
+/* ============================
+   TEXT
+=============================== */
+.welcome-text {
+  font-size: 25px;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 20px;
+  text-align: center;
+  font-family: 'roboto', sans-serif;
+  padding: 30px;
+>>>>>>> 9415b571d574ec9c719e5cec28a46f476714478f
 }
