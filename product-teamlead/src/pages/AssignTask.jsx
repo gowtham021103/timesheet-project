@@ -78,7 +78,7 @@ function AssignTask() {
             <option value="">Select Project</option>
             {projects.map((p) => (
               <option key={p.id} value={p.id}>
-                {p.name}
+                {p.title}
               </option>
             ))}
           </select>
