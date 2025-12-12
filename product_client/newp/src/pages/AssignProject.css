@@ -1,0 +1,88 @@
+.assign-project {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 25px;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+
+/* Heading */
+.assign-project h2 {
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #1e293b;
+  text-align: center;
+}
+
+/* Form */
+.assign-project form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  flex: 1; /* allows form to expand full height */
+}
+
+/* Labels */
+.assign-project label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #334155;
+}
+
+/* Inputs */
+.assign-project select,
+.assign-project textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background: #f8fafc;
+  font-size: 14px;
+  color: #1e293b;
+  transition: border 0.2s;
+}
+
+.assign-project select:focus,
+.assign-project textarea:focus {
+  outline: none;
+  border-color: #6366f1;
+}
+
+/* Textarea */
+.assign-project textarea {
+  height: 120px;
+  resize: vertical;
+  flex-shrink: 0;
+}
+
+/* Error Message */
+.assign-project .error {
+  color: #dc2626;
+  font-size: 14px;
+  margin-top: -10px;
+}
+
+/* Button */
+.assign-project button {
+  background: #4f46e5;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.assign-project button:hover {
+  background: #4338ca;
+}
+
+.assign-project button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}

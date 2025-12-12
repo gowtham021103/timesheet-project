@@ -1,0 +1,99 @@
+/* Container */
+.create-project {
+  width: 100%;         /* Full width inside dashboard content */
+  height: 100%;        /* Full height of content area */
+  margin: 0;           /* Align to top-left of content panel */
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 0;    /* Optional: remove rounded corners for full screen */
+  box-shadow: none;    /* Optional: remove shadow */
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  font-family: system-ui, sans-serif;
+}
+
+/* Heading */
+.create-project h2 {
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 25px;
+  color: #1e293b;
+  text-align: center;
+}
+
+/* Form */
+.create-project form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;  /* Expand to fill height */
+}
+
+/* Form groups */
+.create-project form div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Labels */
+.create-project label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #334155;
+}
+
+/* Inputs */
+.create-project input,
+.create-project textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background: #f8fafc;
+  font-size: 14px;
+  color: #1e293b;
+  transition: border 0.2s;
+}
+
+.create-project input:focus,
+.create-project textarea:focus {
+  outline: none;
+  border-color: #6366f1;
+}
+
+/* Textarea */
+.create-project textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+/* Error message */
+.create-project .error {
+  color: #dc2626;
+  font-size: 14px;
+  margin-top: -8px;
+}
+
+/* Button */
+.create-project button {
+  background: #4f46e5;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.create-project button:hover {
+  background: #4338ca;
+}
+
+.create-project button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}

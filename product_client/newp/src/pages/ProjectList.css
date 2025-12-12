@@ -1,0 +1,122 @@
+/* Container */
+.project-list {
+  max-width: 800px;
+  margin: 30px auto;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  padding: 25px;
+  font-family: system-ui, sans-serif;
+  color: #1e293b;
+}
+
+/* Heading */
+.project-list h2 {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Filter Section */
+.project-list label {
+  font-size: 14px;
+  font-weight: 500;
+  margin-right: 8px;
+  color: #475569;
+}
+
+.project-list select {
+  padding: 8px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background: #f8fafc;
+  font-size: 14px;
+  color: #1e293b;
+  margin-right: 10px;
+  transition: border 0.2s;
+}
+
+.project-list select:focus {
+  outline: none;
+  border-color: #6366f1;
+}
+
+/* Refresh Button */
+.project-list button {
+  background: #4f46e5;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.project-list button:hover {
+  background: #4338ca;
+}
+
+.project-list button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+/* Table */
+.project-list table {
+  width: 100%;
+  margin-top: 15px;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.project-list th,
+.project-list td {
+  padding: 12px;
+  border-bottom: 1px solid #e2e8f0;
+  text-align: left;
+}
+
+.project-list th {
+  background: #f1f5f9;
+  font-weight: 600;
+  color: #334155;
+}
+
+.project-list tr:hover {
+  background: #f8fafc;
+  transition: background 0.2s;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .project-list table,
+  .project-list thead,
+  .project-list tbody,
+  .project-list th,
+  .project-list td,
+  .project-list tr {
+    display: block;
+  }
+
+  .project-list tr {
+    margin-bottom: 15px;
+  }
+
+  .project-list td {
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+  }
+
+  .project-list td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 12px;
+    font-weight: 600;
+    text-align: left;
+    color: #334155;
+  }
+}

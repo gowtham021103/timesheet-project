@@ -1,0 +1,108 @@
+/* Container */
+.client-reports {
+  max-width: 600px;
+  margin: 30px auto;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  padding: 25px;
+  font-family: system-ui, sans-serif;
+  color: #1e293b;
+}
+
+/* Heading */
+.client-reports h2 {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Subheadings */
+.client-reports h3 {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 12px;
+  color: #334155;
+}
+
+/* Form Elements */
+.client-reports label {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  display: block;
+  color: #475569;
+}
+
+.client-reports select,
+.client-reports input,
+.client-reports textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background: #f8fafc;
+  font-size: 14px;
+  color: #1e293b;
+  transition: border 0.2s;
+}
+
+.client-reports select:focus,
+.client-reports input:focus,
+.client-reports textarea:focus {
+  outline: none;
+  border-color: #6366f1;
+}
+
+.client-reports textarea {
+  resize: vertical;
+  height: 90px;
+}
+
+/* Button */
+.client-reports button {
+  background: #4f46e5;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.client-reports button:hover {
+  background: #4338ca;
+}
+
+.client-reports button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+/* Reports List */
+.client-reports ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.client-reports li {
+  padding: 12px;
+  margin-bottom: 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background: #f1f5f9;
+}
+
+.client-reports li strong {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.client-reports li small {
+  color: #64748b;
+}
