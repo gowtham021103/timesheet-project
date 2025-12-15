@@ -52,6 +52,16 @@ export default function Router() {
         }
       />
 
+      {/* Client Admin */}
+      <Route
+        path="/client-admin-dashboard"
+        element={
+          <ProtectedRoute>
+            <AdminDashboard />
+          </ProtectedRoute>
+        }
+      />
+
       <Route
         path="/manager-dashboard"
         element={

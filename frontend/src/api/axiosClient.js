@@ -1,13 +1,13 @@
 import axios from "axios";
 
 const axiosClient = axios.create({
-  baseURL: "http://127.0.0.1:8000/api/",
+  baseURL: "http://127.0.0.1:8000/api",
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-// Attach access token automatically
+// 🔑 Attach access token automatically
 axiosClient.interceptors.request.use((config) => {
   const token = localStorage.getItem("access");
   if (token) {
@@ -16,34 +16,38 @@ axiosClient.interceptors.request.use((config) => {
   return config;
 });
 
-// Auto refresh expired token
+// 🔄 Auto refresh expired token
 axiosClient.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    if (
+      error.response?.status === 401 &&
+      !originalRequest._retry &&
+      localStorage.getItem("refresh")
+    ) {
       originalRequest._retry = true;
 
-      const refresh = localStorage.getItem("refresh");
-      if (!refresh) return Promise.reject(error);
-
       try {
-        const res = await axios.post("http://127.0.0.1:8000/api/token/refresh/", {
-          refresh,
-        });
+        const res = await axios.post(
+          "http://127.0.0.1:8000/api/accounts/token/refresh/",
+          {
+            refresh: localStorage.getItem("refresh"),
+          }
+        );
 
         localStorage.setItem("access", res.data.access);
 
-        axiosClient.defaults.headers.Authorization = `Bearer ${res.data.access}`;
         originalRequest.headers.Authorization = `Bearer ${res.data.access}`;
 
         return axiosClient(originalRequest);
-      } catch (e) {
-        console.log("Refresh failed → logging out");
+      } catch (err) {
+        console.warn("Refresh token expired → logout");
 
         localStorage.removeItem("access");
         localStorage.removeItem("refresh");
+        localStorage.removeItem("role");
 
         window.location.href = "/login";
       }

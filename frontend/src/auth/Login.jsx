@@ -12,13 +12,10 @@ export default function Login() {
 
   // Adjust this based on your backend role strings
   const rolePathMap = {
-    product_admin: "/product-admin",
-    client_admin: "/client-admin",
-    manager: "/manager",
-    team_lead: "/team-lead",
-    employee: "/employee",
-    hr: "/hr",
-  };
+  admin: "/admin",
+  manager: "/manager",
+  employee: "/employee",
+};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,8 +39,10 @@ export default function Login() {
       }
 
       // Save tokens
-      localStorage.setItem("accessToken", data.access);
-      localStorage.setItem("refreshToken", data.refresh);
+      localStorage.setItem("access", data.access);
+      localStorage.setItem("refresh", data.refresh);
+      localStorage.setItem("role", data.role);
+
 
       // 🔥 Get profile to know role
       const profile = await authApi.profile();
