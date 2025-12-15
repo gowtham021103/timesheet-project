@@ -1,11 +1,15 @@
+/* Reset (optional but recommended) */
+* {
+  box-sizing: border-box;
+}
+
 /* Container */
 .project-list {
-  max-width: 800px;
-  margin: 30px auto;
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 25px 40px;
   background: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  padding: 25px;
   font-family: system-ui, sans-serif;
   color: #1e293b;
 }
@@ -90,7 +94,7 @@
   transition: background 0.2s;
 }
 
-/* Responsive */
+/* Responsive Table */
 @media (max-width: 600px) {
   .project-list table,
   .project-list thead,
@@ -99,10 +103,16 @@
   .project-list td,
   .project-list tr {
     display: block;
+    width: 100%;
   }
 
   .project-list tr {
     margin-bottom: 15px;
+    border-bottom: 2px solid #e2e8f0;
+  }
+
+  .project-list thead {
+    display: none;
   }
 
   .project-list td {

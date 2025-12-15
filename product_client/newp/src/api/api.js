@@ -1,51 +1,63 @@
-// src/api.js
-const API_BASE = "http://localhost:8000/api";
+// src/api/api.js
+import axios from "axios";
 
-export async function fetchManagers() {
-  const res = await fetch(`${API_BASE}/managers/`);
-  return res.json();
-}
+const API = axios.create({
+  baseURL: "http://127.0.0.1:8000/api",
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
-export async function fetchProjects(status) {
-  const q = status ? `?status=${status}` : '';
-  const res = await fetch(`${API_BASE}/projects/${q}`);
-  return res.json();
-}
+/* ===================== PROJECTS ===================== */
 
-export async function createProject(payload) {
-  const res = await fetch(`${API_BASE}/projects/`, {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(payload)
+// Get all projects (optionally filter by status)
+export const fetchProjects = async (status) => {
+  const res = await API.get("/projects/", {
+    params: status ? { status } : {},
   });
-  return res.json();
-}
+  return res.data;
+};
 
-export async function assignProject(payload) {
-  const res = await fetch(`${API_BASE}/assign/`, {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(payload)
+// Create a new project
+export const createProject = async (data) => {
+  const res = await API.post("/projects/", data);
+  return res.data;
+};
+
+/* ===================== MANAGERS ===================== */
+
+// Get managers
+export const fetchManagers = async () => {
+  const res = await API.get("/managers/");
+  return res.data;
+};
+
+/* ===================== ASSIGNMENTS ===================== */
+
+// Assign project to manager
+export const assignProject = async (data) => {
+  const res = await API.post("/assign/", data);
+  return res.data;
+};
+
+// List assignments
+export const fetchAssignments = async () => {
+  const res = await API.get("/assignments/");
+  return res.data;
+};
+
+/* ===================== REPORTS ===================== */
+
+// Get reports (optionally by project)
+export const fetchReports = async (projectId) => {
+  const res = await API.get("/reports/", {
+    params: projectId ? { project_id: projectId } : {},
   });
-  return res.json();
-}
+  return res.data;
+};
 
-export async function fetchAssignments() {
-  const res = await fetch(`${API_BASE}/assignments/`);
-  return res.json();
-}
-
-export async function fetchReports(projectId) {
-  const q = projectId ? `?project_id=${projectId}` : '';
-  const res = await fetch(`${API_BASE}/reports/${q}`);
-  return res.json();
-}
-
-export async function createReport(payload) {
-  const res = await fetch(`${API_BASE}/reports/`, {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(payload)
-  });
-  return res.json();
-}
+// Create report
+export const createReport = async (data) => {
+  const res = await API.post("/reports/", data);
+  return res.data;
+};

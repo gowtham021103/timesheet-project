@@ -1,6 +1,6 @@
 /* Container */
 .client-reports {
-  max-width: 600px;
+  max-width: 935px;
   margin: 30px auto;
   background: #ffffff;
   border-radius: 10px;
@@ -38,7 +38,7 @@
 .client-reports select,
 .client-reports input,
 .client-reports textarea {
-  width: 100%;
+  width: 500px;
   padding: 10px;
   margin-bottom: 12px;
   border: 1px solid #cbd5e1;

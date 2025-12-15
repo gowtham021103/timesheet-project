@@ -12,9 +12,12 @@ class ManagerListAPIView(generics.ListAPIView):
     def get_queryset(self):
         return User.objects.filter(profile__is_manager=True)
 
+from rest_framework.permissions import AllowAny
+
 class ProjectListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = ProjectSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]  # allow read for everyone; creation requires auth (adjust as needed)
+    permission_classes = [AllowAny]
+ # allow read for everyone; creation requires auth (adjust as needed)
 
     def get_queryset(self):
         qs = Project.objects.all().order_by('-created_at')
@@ -34,7 +37,8 @@ class AssignmentCreateAPIView(generics.CreateAPIView):
 
 class AssignmentListAPIView(generics.ListAPIView):
     serializer_class = AssignmentSerializer
-    queryset = Assignment.objects.select_related('project','manager').all().order_by('-assigned_at')
+    queryset = Assignment.objects.select_related('project','manager').all().order_by('-created_at')
+
 
 class ProjectReportListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = ProjectReportSerializer

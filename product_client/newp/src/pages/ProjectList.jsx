@@ -1,34 +1,25 @@
-import React, { useEffect, useState } from "react";
-import sampleProjects from "../Sample-projects";
+import React, { useState, useEffect } from "react";
 import "./ProjectList.css";
 
-export default function ProjectList() {
-  const [projects, setProjects] = useState([]);
+export default function ProjectList({ projects }) {
   const [status, setStatus] = useState("");
+  const [filteredProjects, setFilteredProjects] = useState([]);
 
   useEffect(() => {
-    load();
-  }, [status]);
-
-  function load() {
-    let filtered = sampleProjects;
-
-    if (status) {
-      filtered = sampleProjects.filter(p =>
-        p.status.toLowerCase() === status.toLowerCase()
-      );
+    if (status === "") {
+      setFilteredProjects(projects);
+    } else {
+      setFilteredProjects(projects.filter((p) => p.status === status));
     }
-
-    setProjects(filtered);
-  }
+  }, [status, projects]);
 
   return (
-    <div className="project-list card p-4">
+    <div className="project-list">
       <h2>Projects</h2>
 
-      <div>
+      <div style={{ marginBottom: "15px" }}>
         <label>Filter by status: </label>
-        <select value={status} onChange={e => setStatus(e.target.value)}>
+        <select value={status} onChange={(e) => setStatus(e.target.value)}>
           <option value="">All</option>
           <option value="Ongoing">Ongoing</option>
           <option value="Completed">Completed</option>
@@ -36,7 +27,7 @@ export default function ProjectList() {
         </select>
       </div>
 
-      <table style={{ width: "100%", marginTop: 12, borderCollapse: "collapse" }}>
+      <table>
         <thead>
           <tr>
             <th style={{ textAlign: "left" }}>Title</th>
@@ -45,16 +36,23 @@ export default function ProjectList() {
             <th>Deadline</th>
           </tr>
         </thead>
-
         <tbody>
-          {projects.map(p => (
-            <tr key={p.id}>
-              <td>{p.title}</td>
-              <td>{p.status}</td>
-              <td>{p.assignedTo}</td>
-              <td>{p.deadline}</td>
+          {filteredProjects.length > 0 ? (
+            filteredProjects.map((p) => (
+              <tr key={p.id}>
+                <td data-label="Title">{p.title}</td>
+                <td data-label="Status">{p.status}</td>
+                <td data-label="Assigned To">{p.assignedTo}</td>
+                <td data-label="Deadline">{p.deadline}</td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="4" style={{ textAlign: "center" }}>
+                No projects found
+              </td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
     </div>

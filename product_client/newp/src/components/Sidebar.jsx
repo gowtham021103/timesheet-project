@@ -7,12 +7,12 @@ export default function Sidebar() {
       <h2 className="logo">Client Dashboard</h2>
 
       <nav>
-        <NavLink to="/assign-project" className="menu">
-          Assign Project
-        </NavLink>
-
         <NavLink to="/create-project" className="menu">
           Create Project
+        </NavLink>
+        
+        <NavLink to="/assign-project" className="menu">
+          Assign Project
         </NavLink>
 
         <NavLink to="/project-list" className="menu">

@@ -1,6 +1,7 @@
 // src/components/ClientReports.jsx
 import React, { useEffect, useState } from "react";
-import { fetchProjects, fetchReports, createReport } from "../api/api";
+// import { fetchProjects, fetchReports, createReport } from "../api/api"; // comment out API for testing
+import sampleProjects from "../Sample-projects"; // import the sample projects
 import "./ClientReports.css";
 
 export default function ClientReports() {
@@ -14,15 +15,23 @@ export default function ClientReports() {
   useEffect(()=> { loadProjects(); }, []);
 
   async function loadProjects() {
-    const pr = await fetchProjects(); // show all projects
-    setProjects(pr);
+    // For testing with sample data:
+    setProjects(sampleProjects);
+
+    // For real API:
+    // const pr = await fetchProjects();
+    // setProjects(pr);
   }
 
   async function loadReportsForProject(projectId) {
     setLoading(true);
     try {
-      const r = await fetchReports(projectId);
-      setReports(r);
+      // For testing, just empty array
+      setReports([]);
+
+      // For real API:
+      // const r = await fetchReports(projectId);
+      // setReports(r);
     } catch (err) {
       console.error(err);
     } finally {
@@ -41,10 +50,16 @@ export default function ClientReports() {
     e.preventDefault();
     if (!selectedProject) return;
     try {
-      const payload = { project_id: Number(selectedProject), title: newTitle, content: newContent };
-      await createReport(payload);
-      setNewTitle(""); setNewContent("");
+      // For testing, just log
+      console.log({ project_id: Number(selectedProject), title: newTitle, content: newContent });
+
+      setNewTitle(""); 
+      setNewContent("");
       loadReportsForProject(selectedProject);
+
+      // For real API:
+      // const payload = { project_id: Number(selectedProject), title: newTitle, content: newContent };
+      // await createReport(payload);
     } catch (err) {
       console.error(err);
     }
@@ -58,7 +73,11 @@ export default function ClientReports() {
         <label>Choose project</label>
         <select value={selectedProject} onChange={onProjectChange}>
           <option value="">-- Select project --</option>
-          {projects.map(p => <option key={p.id} value={p.id}>{p.title} ({p.status})</option>)}
+          {projects.map(p => (
+            <option key={p.id} value={p.id}>
+              {p.title} ({p.status})
+            </option>
+          ))}
         </select>
       </div>
 
