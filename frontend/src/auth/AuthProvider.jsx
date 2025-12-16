@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import authApi from "../api/authApi";
+import { useNavigate } from "react-router-dom"; // ✅ FIX
 
 const AuthContext = createContext(null);
 
@@ -10,11 +11,13 @@ export function useAuth() {
 export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate(); // ✅ FIX
 
   // 🔄 Load profile on app start
   useEffect(() => {
     async function loadProfile() {
       const token = localStorage.getItem("access");
+
       if (!token) {
         setLoading(false);
         return;
@@ -36,7 +39,7 @@ export default function AuthProvider({ children }) {
     loadProfile();
   }, []);
 
-  // 🔐 Login
+  // 🔐 Login (NO navigation here)
   async function login(username, password) {
     const data = await authApi.login(username, password);
 
@@ -46,29 +49,20 @@ export default function AuthProvider({ children }) {
     const profile = await authApi.profile();
     setUser(profile);
 
-    // 🚀 SPA navigation (no reload)
-    const roleRoutes = {
-      admin: "/admin",
-      manager: "/manager",
-      employee: "/employee",
-      client_admin: "/client-admin",
-    };
-
-    window.history.replaceState(null, "", roleRoutes[profile.role] || "/");
+    return profile; // ✅ correct
   }
 
   // 📝 Register
   async function register(username, email, password) {
     await authApi.register(username, email, password);
-    window.history.replaceState(null, "", "/login");
   }
 
-  // 🚪 Logout
+  // 🚪 Logout (FIXED)
   function logout() {
     localStorage.removeItem("access");
     localStorage.removeItem("refresh");
     setUser(null);
-    window.history.replaceState(null, "", "/login");
+    navigate("/login", { replace: true }); // ✅ FIX
   }
 
   return (

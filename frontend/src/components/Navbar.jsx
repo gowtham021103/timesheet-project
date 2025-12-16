@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { IoIosNotifications } from "react-icons/io";
 import { MdClose } from "react-icons/md";
+import { useAuth } from "../auth/AuthProvider";
 
 const notifications = [
   { id: 1, message: "John Doe has marked their timesheet", time: "5 mins ago", type: "info" },
@@ -12,10 +13,11 @@ const notifications = [
 
 export default function Navbar() {
   const [showNotifications, setShowNotifications] = useState(false);
+  const { user } = useAuth(); 
 
   return (
     <div className="navbar">
-      <h3>Welcome Employee</h3>
+      <h3>Welcome, {user?.username}</h3>
 
       <div className="navbar-actions">
         

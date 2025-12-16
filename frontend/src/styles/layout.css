@@ -51,3 +51,22 @@
   padding: 20px 0;
   overflow-y: auto;
 }
+
+.app-layout {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.body-layout {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+.page-content {
+  flex: 1;
+  padding: 24px;
+  background-color: #f5f7fa;
+  overflow-y: auto;
+}

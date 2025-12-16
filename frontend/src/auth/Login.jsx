@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import authApi from "../api/authApi";     // ✅ FIXED IMPORT
+import { useAuth } from "./AuthProvider";
 import "../styles/login.css";
 
 export default function Login() {
@@ -8,14 +8,16 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
-  // Adjust this based on your backend role strings
+  const navigate = useNavigate();
+  const { login } = useAuth();
+
   const rolePathMap = {
-  admin: "/admin",
-  manager: "/manager",
-  employee: "/employee",
-};
+    admin: "/admin",
+    manager: "/manager",
+    employee: "/employee",
+    client_admin: "/client-admin",
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,38 +31,24 @@ export default function Login() {
     try {
       setLoading(true);
 
-      // 🔥 NEW: call SimpleJWT login endpoint
-      const data = await authApi.login(employeeId, password);
-
-      // Backend returns: {access, refresh}
-      if (!data.access) {
-        setError("Invalid login response from server");
-        return;
-      }
-
-      // Save tokens
-      localStorage.setItem("access", data.access);
-      localStorage.setItem("refresh", data.refresh);
-      localStorage.setItem("role", data.role);
-
-
-      // 🔥 Get profile to know role
-      const profile = await authApi.profile();
+      // 🔥 Login via AuthProvider
+      const profile = await login(employeeId, password);
 
       if (!profile?.role) {
-        setError("User role not found in profile");
+        setError("User role not found");
         return;
       }
 
-      localStorage.setItem("role", profile.role);
-
-      // 🔥 Redirect by role
       const path = rolePathMap[profile.role];
-      if (path) navigate(path);
-      else setError("Unknown role received from server");
+
+      if (!path) {
+        setError("Unknown role received from server");
+        return;
+      }
+
+      navigate(path, { replace: true });
     } catch (err) {
       const msg =
-        err?.response?.data?.message ||
         err?.response?.data?.detail ||
         "Invalid Employee ID or Password";
 
@@ -92,6 +80,7 @@ export default function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
+              autoComplete="new-password"
             />
           </div>
 

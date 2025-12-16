@@ -8,6 +8,7 @@ from .serializers import RegisterSerializer, LoginSerializer, UserSerializer
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAdminUser
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework_simplejwt.tokens import RefreshToken
 
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -66,3 +67,15 @@ class CreateClientAdminView(APIView):
         serializer.save()
 
         return Response({"message": "Client admin created"})
+
+
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            token = RefreshToken(request.data["refresh"])
+            token.blacklist()
+            return Response({"detail": "Logged out"})
+        except Exception:
+            return Response({"detail": "Invalid token"}, status=400)
