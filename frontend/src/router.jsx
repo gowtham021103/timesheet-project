@@ -10,11 +10,15 @@ import EmployeeDashboard from "./dashboard/EmployeeDashboard";
 
 import TimesheetList from "./pages/TimesheetList";
 import TimesheetForm from "./pages/TimesheetForm";
-import EmployeeList from "./pages/EmployeeList";
+/* import EmployeeList from "./pages/EmployeeList"; */
 import NotFound from "./pages/NotFound";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useAuth } from "./auth/AuthProvider";
+
+import ViewTimesheets from "./pages/timesheet/viewtimesheet";
+
+import EmployeeTable from "./components/EmployeeTable";
 
 export default function Router() {
   const { user, loading } = useAuth();
@@ -109,12 +113,14 @@ export default function Router() {
         }
       />
 
+      <Route path="/view-timesheets" element={<ViewTimesheets />} />
+
       {/* EMPLOYEES */}
       <Route
         path="/employees"
         element={
           <ProtectedRoute allowed={["admin", "manager"]}>
-            <EmployeeList />
+            <EmployeeTable />
           </ProtectedRoute>
         }
       />

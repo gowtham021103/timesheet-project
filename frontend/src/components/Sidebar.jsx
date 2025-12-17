@@ -31,13 +31,13 @@ export default function Sidebar() {
         </Link>
 
         <Link to="/timesheets" className="nav-item">
-          <span className="nav-icon">📝</span>
-          <span className="nav-label">View Timesheets</span>
+          <span className="nav-icon">➕</span>
+          <span className="nav-label">Create Timesheets</span>
         </Link>
 
-        <Link to="/timesheets/new" className="nav-item">
-          <span className="nav-icon">➕</span>
-          <span className="nav-label">Create Timesheet</span>
+        <Link to="/view-timesheets" className="nav-item">
+          <span className="nav-icon">📝</span>
+          <span className="nav-label">View Timesheet</span>
         </Link>
 
         <Link to="/employees" className="nav-item">

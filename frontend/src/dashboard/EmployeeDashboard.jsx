@@ -20,7 +20,7 @@ export default function EmployeeDashboard() {
         <Navbar />
 
         <DashboardCards />
-        <EmployeeTable />
+        
 
       
       </div>

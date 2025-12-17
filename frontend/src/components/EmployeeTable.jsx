@@ -1,5 +1,7 @@
 import { useState } from "react";
 import SearchBar from "./SearchBar";
+import Sidebar from "./Sidebar";
+
 
 const employeesData = [
   { id: 1, name: "John Doe", role: "Developer", status: "Active" },
@@ -16,7 +18,11 @@ export default function EmployeeTable() {
   );
 
   return (
-    <>
+
+    <div className="layout">
+
+      <Sidebar />
+      <div className="main">
       <SearchBar setSearch={setSearch} />
       <table>
         <thead>
@@ -38,6 +44,7 @@ export default function EmployeeTable() {
           ))}
         </tbody>
       </table>
-    </>
+      </div>
+    </div>
   );
 }

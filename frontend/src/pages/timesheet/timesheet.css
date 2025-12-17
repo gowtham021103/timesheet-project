@@ -1,575 +1,186 @@
-/* ================== */
-/* Global Styles */
-/* ================== */
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* Layout */
+.layout {
+  display: flex;
+  height: 100vh;
 }
 
-html, body {
-  width: 100%;
-  height: 100%;
+.main {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
 }
 
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
-  color: #333;
+.page-title {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 20px;
 }
 
-#root {
-  width: 100%;
-  height: 100%;
-  padding: 0;
-}
-
-/* ================== */
-/* App Container */
-/* ================== */
-
-.app-container {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
-  
-}
-
-.app-header {
-  text-align: center;
-  margin-bottom: 30px;
-  animation: slideDown 0.5s ease;
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.app-title {
-  font-size: 36px;
-  font-weight: 800;
-  color: #011c47;
-  margin-bottom: 7px;
-  letter-spacing: -0.5px;
-}
-
-.app-subtitle {
-  font-size: 15px;
-  color: #64748b;
-  font-weight: 500;
-  letter-spacing: 0.3px;
-}
-
-.app-content {
+/* Wrapper */
+.timesheet-wrapper {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 300px 1fr;
   gap: 30px;
-  max-width: 1200px;
-  margin: 0 auto;
-  align-items: stretch;
+  align-items: start;
 }
 
-/* ================== */
-/* Calendar Section */
-/* ================== */
-
-.calendar-section {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  height: 100%;
-}
-
-.calendar-title {
-  font-size: 18px;
-  font-weight: 700;
-  color: #0f172a;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 0 4px;
-}
-
-.section-title {
-  font-size: 18px;
-  font-weight: 700;
-  color: #0f172a;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 0 4px;
-  margin: 0;
-}
-
-.react-calendar {
-  width: 100%;
-  background-color: white;
-  border: 2px solid #e5e7eb;
-  border-radius: 12px;
-  font-family: 'Segoe UI', sans-serif;
-  line-height: 1.6;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-  overflow: hidden;
-  flex: 1;
-}
-
-.react-calendar__navigation {
-  padding: 14px 16px;
-  background: linear-gradient(135deg, #016cb3 0%, #0a2f5e 100%);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
-}
-
-.react-calendar__navigation button {
-  color: rgb(255, 255, 255);
-  min-width: 40px;
-  background: rgba(194, 181, 181, 0.15);
-  border: 1px solid rgba(0, 0, 0, 0.25);
-  border-radius: 6px;
-  font-size: 13px;
-  padding: 8px 10px;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-weight: 600;
-}
-
-.react-calendar__navigation button:hover {
-  background: rgba(255,255,255,0.25);
-  border-color: rgba(255,255,255,0.35);
-}
-
-.react-calendar__navigation button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.react-calendar__navigation__label {
-  color: white;
-  font-weight: 700;
-  font-size: 15px;
-  text-align: center;
-  flex: 1;
-}
-
-.react-calendar__month-view {
-
-  padding: 10px;
-}
-
-.react-calendar__month-view__weekdays {
-  display: flex;
-  justify-content: space-around;
-  text-align: center;
-  text-transform: uppercase;
-  font-weight: 700;
-  color: #00445E;
-  font-size: 11px;
-  padding: 12px 0;
-  letter-spacing: 0.8px;
-  margin-bottom: 8px;
-}
-
-.react-calendar__month-view__weekdays__weekday {
-  flex: 1;
-  padding: 8px 0;
-}
-
-.react-calendar__month-view__weekdays__weekday abbr {
-  text-decoration: none;
-  border: none;
-}
-
-.react-calendar__month-view__days {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 8px;
-}
-
-.react-calendar__month-view__days__day {
-  border-radius: 8px;
-  padding: 12px 0;
-  text-align: center;
-  transition: all 0.2s;
-  font-size: 14px;
-}
-
-.react-calendar__tile {
-  color: #333;
-  padding: 20px 8px;
-  border-radius: 8px;
-  transition: all 0.2s;
-  font-size: 14px;
-  font-weight: 500;
-  background: transparent;
-  border: 2px solid transparent;
-}
-
-.react-calendar__tile:hover {
-  background-color: #e0f2fe;
-  cursor: pointer;
-  transform: scale(1.08);
-  border-color: #00445E;
-}
-
-.react-calendar__tile--active {
-  background: linear-gradient(135deg, #00445E 0%, #005A7F 100%);
-  color: white;
-  border-radius: 8px;
-  font-weight: 700;
-  border-color: #00445E;
-}
-
-.react-calendar__tile--active:hover {
-  background: linear-gradient(135deg, #0a2f5e 0%, #003d5c 100%);
-  transform: scale(1.08);
-}
-
-.bg-blue-200 {
-  background-color: #bfdbfe !important;
-  color: #1e40af !important;
-  font-weight: 700;
-  border-radius: 8px;
-}
-
-.react-calendar__tile--disabled {
-  color: #cbd5e1;
-  background-color: #f8fafc;
-  cursor: not-allowed;
-}
-
-/* ================== */
-/* Form Section */
-/* ================== */
-
-.form-section {
+/* Calendar */
+.calendar-box {
+  width: 300px;        /* controls size */
   background: white;
-  padding: 28px;
+  padding: 12px;
   border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-  border: 1px solid #e2e8f0;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  height: 100%;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
 
-.form-title {
-  font-size: 18px;
-  font-weight: 700;
-  color: #0f172a;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding-bottom: 8px;
-  border-bottom: 2px solid #e2e8f0;
+
+/* Marked dates */
+.marked-date {
+  background: #bfdbfe !important;
+  border-radius: 6px;
+  font-weight: bold;
 }
 
+/* Right panel */
+.task-panel {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.task-panel h2 {
+  margin-bottom: 15px;
+}
+
+/* Form */
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  margin-bottom: 12px;
 }
 
-.form-label {
+.form-group label {
   font-size: 12px;
-  font-weight: 700;
-  color: #334155;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  padding: 0 2px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 60px;
 }
 
 .date-display {
-  padding: 12px 14px;
-  background: linear-gradient(135deg, #f0f4f8 0%, #e8ecf1 100%);
-  border-radius: 8px;
-  border: 2px solid #e2e8f0;
+  padding: 8px;
+  background: #f1f5f9;
+  border-radius: 6px;
   font-size: 13px;
-  color: #334155;
-  font-weight: 600;
-  text-align: center;
 }
 
-.form-input,
-.form-textarea {
+/* Button */
+.add-btn {
   width: 100%;
-  padding: 11px 13px;
-  border: 2px solid #e2e8f0;
-  border-radius: 8px;
-  font-size: 13px;
-  font-family: inherit;
-  transition: all 0.2s;
-  background: #f8fafc;
-  color: #0f172a;
-}
-
-.form-input::placeholder,
-.form-textarea::placeholder {
-  color: #94a3b8;
-}
-
-.form-input:focus,
-.form-textarea:focus {
-  outline: none;
-  border-color: #00445E;
-  background: white;
-  box-shadow: 0 0 0 3px rgba(0, 68, 94, 0.1);
-}
-
-.form-textarea {
-  resize: vertical;
-  min-height: 70px;
-  font-family: 'Segoe UI', sans-serif;
-}
-
-.form-button {
-  width: 100%;
-  padding: 11px 16px;
-  background: linear-gradient(135deg, #00445E 0%, #005A7F 100%);
+  padding: 10px;
+  background: #00445E;
   color: white;
   border: none;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 700;
+  border-radius: 6px;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  margin-top: auto;
+  margin-top: 10px;
 }
 
-.form-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 68, 94, 0.3);
+.add-btn:hover {
+  background: #00344a;
 }
 
-.form-button:active {
-  transform: translateY(0);
+/* Records */
+.records-section {
+  margin-top: 25px;
 }
 
-/* ================== */
-/* Table Section */
-/* ================== */
-
-.table-section {
-  margin-top: 40px;
-  background: white;
-  padding: 32px;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-  border: 1px solid #e2e8f0;
-  width: 100%;
+.records-section h3 {
+  margin-bottom: 10px;
 }
 
-.table-header {
-  margin-bottom: 24px;
-  padding-bottom: 16px;
-  border-bottom: 2px solid #e2e8f0;
-}
-
-.table-title {
-  font-size: 26px;
-  font-weight: 800;
-  color: #0f172a;
-  margin: 0 0 6px 0;
-  letter-spacing: -0.3px;
-}
-
-.table-description {
-  font-size: 13px;
-  color: #64748b;
-  font-weight: 500;
-  margin: 0;
-}
-
-.timesheet-table {
+table {
   width: 100%;
   border-collapse: collapse;
-  background: white;
 }
 
-.timesheet-table thead {
-  background: linear-gradient(135deg, #011c47 0%, #0a2f5e 100%);
-}
-
-.timesheet-table th {
-  padding: 16px 18px;
-  text-align: left;
+thead {
+  background: #0a2f5e;
   color: white;
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  border-bottom: 2px solid #e2e8f0;
+  font-size: 9px;
 }
 
-.timesheet-table td {
-  padding: 16px 18px;
-  text-align: left;
+th, td {
+  padding: 3px;
+  font-size: 7px;
   border-bottom: 1px solid #e2e8f0;
-  font-size: 14px;
-  color: #475569;
-  font-weight: 500;
 }
 
-.timesheet-table tbody tr {
-  transition: all 0.2s;
-  background: white;
-}
-
-.timesheet-table tbody tr:hover {
-  background: linear-gradient(90deg, #f0f4f8 0%, #f8fafc 100%);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-
-.timesheet-table tbody tr:last-child td {
-  border-bottom: none;
-}
-
-.empty-state {
+.empty {
   text-align: center;
-  padding: 80px 20px;
+  padding: 20px;
   color: #94a3b8;
 }
 
-.empty-icon {
-  font-size: 56px;
-  margin-bottom: 16px;
-  opacity: 0.6;
-}
-
-.empty-text {
-  font-size: 16px;
-  font-weight: 600;
-  color: #64748b;
-  margin: 0 0 8px 0;
-}
-
-.empty-subtext {
+.table-head {
   font-size: 13px;
-  color: #cbd5e1;
-  margin: 0;
-}
-
-.hours-badge {
-  display: inline-block;
-  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
-  color: #0c4a6e;
-  padding: 5px 12px;
-  border-radius: 6px;
   font-weight: 700;
-  font-size: 12px;
-  letter-spacing: 0.3px;
-  white-space: nowrap;
 }
 
-.task-cell {
-  max-width: 500px;
-  word-wrap: break-word;
-  line-height: 1.5;
+.table-row {
+  width: 10px;
 }
 
-/* ================== */
-/* Responsive Design */
-/* ================== */
 
-@media (max-width: 1024px) {
-  .app-content {
-    grid-template-columns: 1fr 1fr;
-  }
+/* Page Header */
+.page-header {
+  margin-bottom: 20px;
 }
 
-@media (max-width: 768px) {
-  .app-container {
-    padding: 30px 15px;
-  }
-
-  .app-header {
-    margin-bottom: 40px;
-  }
-
-  .app-title {
-    font-size: 28px;
-  }
-
-  .app-content {
-    grid-template-columns: 1fr;
-    gap: 25px;
-  }
-
-  .calendar-section,
-  .form-section {
-    height: auto;
-  }
-
-  .form-section,
-  .table-section {
-    padding: 24px;
-  }
-
-  .react-calendar__tile {
-    padding: 16px 6px;
-  }
-
-  .timesheet-table th,
-  .timesheet-table td {
-    padding: 14px;
-    font-size: 13px;
-  }
+.page-header h1 {
+  font-size: 28px;
+  font-weight: 800;
+  color: #0f172a;
 }
 
-@media (max-width: 480px) {
-  .app-container {
-    padding: 20px 12px;
-  }
+.page-header p {
+  font-size: 14px;
+  color: #64748b;
+}
 
-  .app-title {
-    font-size: 24px;
-  }
+/* Filters */
+.filter-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
 
-  .app-subtitle {
-    font-size: 13px;
-  }
+.filter-bar select {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 2px solid #e2e8f0;
+  font-size: 14px;
+  background: white;
+  cursor: pointer;
+}
 
-  .form-section,
-  .table-section {
-    padding: 16px;
-  }
-
-  .form-title {
-    font-size: 16px;
-  }
-
-  .table-title {
-    font-size: 20px;
-  }
-
-  .react-calendar__tile {
-    padding: 14px 4px;
-    font-size: 13px;
-  }
-
-  .timesheet-table th,
-  .timesheet-table td {
-    padding: 10px 8px;
-    font-size: 12px;
-  }
-
-  .empty-state {
-    padding: 40px 12px;
-  }
-
-  .empty-icon {
-    font-size: 40px;
-  }
+/* Employee name */
+.employee-name {
+  font-weight: 700;
+  color: #00445e;
+}
+.employee-name:hover {
+  text-decoration: underline;
 }
