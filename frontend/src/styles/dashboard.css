@@ -675,3 +675,77 @@ table tbody tr:last-child td {
     padding: 10px;
   }
 }
+
+/* Manager Dashboard css */
+/* Layout */
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f1f5f9;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  background-color: #0f172a;
+  color: white;
+  padding: 20px;
+}
+
+.sidebar-title {
+  margin-bottom: 30px;
+  font-size: 20px;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar-menu li {
+  padding: 12px 0;
+  cursor: pointer;
+  opacity: 0.9;
+}
+
+.sidebar-menu li:hover {
+  opacity: 1;
+  color: #38bdf8;
+}
+
+/* Content */
+.dashboard-content {
+  flex: 1;
+  padding: 30px;
+}
+
+.page-heading {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Stats */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.stat-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.stat-title {
+  margin-top: 8px;
+  color: #64748b;
+}
+

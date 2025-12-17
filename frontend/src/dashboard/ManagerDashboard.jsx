@@ -1,14 +1,32 @@
-import { useAuth } from "../auth/AuthProvider";
-export default function ManagerDashboard() {
-  const { logout, user } = useAuth();
-  return (
-    <div className="p-4">
-      <h1 className="text-2xl font-semibold">Manager Dashboard</h1>
-      <p className="mt-2 text-gray-600">Oversee team tasks and timesheets.</p>
+import Sidebar from "../modules/managers/ManagerSidebar";
+import "../styles/dashboard.css";
 
-       <button onClick={logout} style={{ marginTop: "10px" }}>
-        Logout
-      </button>
+const ManagerDashboard = () => {
+  const stats = [
+    { title: "Total Employees", value: 12 },
+    { title: "Total Tasks", value: 34 },
+    { title: "Pending Approvals", value: 7 },
+    { title: "Approved Tasks", value: 21 },
+  ];
+
+  return (
+    <div className="dashboard-container">
+      <Sidebar />
+
+      <div className="dashboard-content">
+        <h2 className="page-heading">Dashboard Overview</h2>
+
+        <div className="stats-grid">
+          {stats.map((item, index) => (
+            <div className="stat-card" key={index}>
+              <h3 className="stat-value">{item.value}</h3>
+              <p className="stat-title">{item.title}</p>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
-}
+};
+
+export default ManagerDashboard;
