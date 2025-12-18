@@ -11,19 +11,27 @@ import EmployeeDashboard from "./dashboard/EmployeeDashboard";
 import TimesheetList from "./pages/TimesheetList";
 import TimesheetForm from "./pages/TimesheetForm";
 import EmployeeList from "./pages/EmployeeList";
+
+import CreateEmployeePage from "./modules/managers/CreateEmployees"; // Added import
+import ViewEmployees from "./modules/managers/Employees"; // Added import
+import AssignTask from "./modules/managers/AssignTask"; // Added import
+import TaskApprovals from "./modules/managers/TaskApprovals"; // Added import
+
 import NotFound from "./pages/NotFound";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useAuth } from "./auth/AuthProvider";
 
 export default function Router() {
-  const { user } = useAuth() || {};
+  const { user, loading } = useAuth();
 
-  // Role → dashboard mapping
+  if (loading) return null; // ⛔ prevent premature redirects
+
   const roleDashboard = {
-    admin: "/admin-dashboard",
-    manager: "/manager-dashboard",
-    employee: "/employee-dashboard",
+    admin: "/admin",
+    manager: "/manager",
+    employee: "/employee",
+    client_admin: "/client-admin",
   };
 
   return (
@@ -32,7 +40,7 @@ export default function Router() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
-      {/* DEFAULT REDIRECT */}
+      {/* ROOT */}
       <Route
         path="/"
         element={
@@ -44,27 +52,36 @@ export default function Router() {
 
       {/* DASHBOARDS */}
       <Route
-        path="/admin-dashboard"
+        path="/admin"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowed={["admin"]}>
             <AdminDashboard />
           </ProtectedRoute>
         }
       />
 
       <Route
-        path="/manager-dashboard"
+        path="/client-admin"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowed={["client_admin"]}>
+            <AdminDashboard />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/manager"
+        element={
+          <ProtectedRoute allowed={["manager"]}>
             <ManagerDashboard />
           </ProtectedRoute>
         }
       />
 
       <Route
-        path="/employee-dashboard"
+        path="/employee"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowed={["employee"]}>
             <EmployeeDashboard />
           </ProtectedRoute>
         }
@@ -102,15 +119,55 @@ export default function Router() {
       <Route
         path="/employees"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowed={["admin", "manager"]}>
             <EmployeeList />
           </ProtectedRoute>
         }
       />
 
-      {/* NOT FOUND */}
+      {/* CREATE EMPLOYEES */}
+      <Route
+        path="/createEmployees"
+        element={
+          <ProtectedRoute allowed={["manager"]}>
+            <CreateEmployeePage />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* ViewEmployees */}
+      <Route
+        path="/viewEmployees"
+        element={
+          <ProtectedRoute allowed={["manager"]}>
+            <ViewEmployees />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* AssignTask */}
+      <Route
+        path="/assignTask"
+        element={
+          <ProtectedRoute allowed={["manager"]}>
+            <AssignTask />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Task Approvals */}
+      <Route
+        path="/taskApprovals"
+        element={
+          <ProtectedRoute allowed={["manager"]}>
+            <TaskApprovals />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* 404 */}
       <Route path="/404" element={<NotFound />} />
-      <Route path="*" element={<Navigate to="/404" />} />
+      <Route path="*" element={<Navigate to="/404" replace />} />
     </Routes>
   );
 }
