@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { createEmployee } from "../../api/employeeService";
-import Sidebar from "./ManagerSidebar"; // Sidebar included
+import Sidebar from "./ManagerSidebar";
+import "./manager.css";
 
 const CreateEmployeePage = () => {
   const [form, setForm] = useState({ name: "", email: "", role: "Employee" });
@@ -30,47 +31,33 @@ const CreateEmployeePage = () => {
   };
 
   return (
-    <div className="dashboard-container">
-      {/* Sidebar */}
+  
+    <div className="app-layout">
       <Sidebar />
 
-      {/* Main Content */}
-      <div className="dashboard-content">
-        <h2 className="page-heading">Create Employee</h2>
-        {error && <p>{error}</p>}
+    <div className="task-container">
+      <h2 className="page-heading">Create Employee</h2>
+      {error && <p className="error-msg">{error}</p>}
+      <div className="form-card">
+        <form onSubmit={handleSubmit}>
+          <label>Name *</label>
+          <input type="text" name="name" value={form.name} onChange={handleChange} />
 
-        <div>
-          <form onSubmit={handleSubmit}>
-            <label>Name *</label>
-            <input
-              type="text"
-              name="name"
-              value={form.name}
-              onChange={handleChange}
-              placeholder="Enter employee name"
-            />
+          <label>Email *</label>
+          <input type="email" name="email" value={form.email} onChange={handleChange} />
 
-            <label>Email *</label>
-            <input
-              type="email"
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              placeholder="Enter employee email"
-            />
+          <label>Role</label>
+          <select name="role" value={form.role} onChange={handleChange}>
+            <option>Employee</option>
+          </select>
 
-            <label>Role</label>
-            <select name="role" value={form.role} onChange={handleChange}>
-              <option>Employee</option>
-            </select>
-
-            <button type="submit" disabled={loading}>
-              {loading ? "Creating..." : "Create Employee"}
-            </button>
-          </form>
-        </div>
+          <button type="submit" className="primary-btn" disabled={loading}>
+            {loading ? "Creating..." : "Create Employee"}
+          </button>
+        </form>
       </div>
     </div>
+  </div>
   );
 };
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FiMenu, FiX, FiLogOut } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
-import createEmployees from "./CreateEmployees";
+/* import createEmployees from "./CreateEmployees"; */
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(true);
@@ -27,23 +27,28 @@ export default function Sidebar() {
       <nav className="sidebar-nav">
         
         <Link to="/" className="nav-item">
-          <span className="nav-icon">📊</span>
+          
           <span className="nav-label">Dashboard</span>
         </Link>
 
         <Link to="/createEmployees" className="nav-item">
-          <span className="nav-icon">📝</span>
+          
           <span className="nav-label">Create Employees</span>
         </Link>
 
-        <Link to="/timesheets/new" className="nav-item">
-          <span className="nav-icon">➕</span>
+        <Link to="/viewEmployees" className="nav-item">
+        
           <span className="nav-label">Employees</span>
         </Link>
 
-        <Link to="/employees" className="nav-item">
-          <span className="nav-icon">👥</span>
+        <Link to="/assignTask" className="nav-item">
+          
           <span className="nav-label">Assign Task</span>
+        </Link>
+
+        <Link to="/taskApprovals" className="nav-item">
+          
+          <span className="nav-label">Task Approvals</span>
         </Link>
 
         <button onClick={logout} className="nav-item logout-btn">

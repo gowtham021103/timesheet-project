@@ -14,7 +14,7 @@ const ManagerDashboard = () => {
       <Sidebar />
 
       <div className="dashboard-content">
-        <h2 className="page-heading">Dashboard Overview</h2>
+        <h2 className="page-heading">Manager Dashboard Overview</h2>
 
         <div className="stats-grid">
           {stats.map((item, index) => (

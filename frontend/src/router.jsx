@@ -11,7 +11,12 @@ import EmployeeDashboard from "./dashboard/EmployeeDashboard";
 import TimesheetList from "./pages/TimesheetList";
 import TimesheetForm from "./pages/TimesheetForm";
 import EmployeeList from "./pages/EmployeeList";
+
 import CreateEmployeePage from "./modules/managers/CreateEmployees"; // Added import
+import ViewEmployees from "./modules/managers/Employees"; // Added import
+import AssignTask from "./modules/managers/AssignTask"; // Added import
+import TaskApprovals from "./modules/managers/TaskApprovals"; // Added import
+
 import NotFound from "./pages/NotFound";
 
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -126,6 +131,36 @@ export default function Router() {
         element={
           <ProtectedRoute allowed={["manager"]}>
             <CreateEmployeePage />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* ViewEmployees */}
+      <Route
+        path="/viewEmployees"
+        element={
+          <ProtectedRoute allowed={["manager"]}>
+            <ViewEmployees />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* AssignTask */}
+      <Route
+        path="/assignTask"
+        element={
+          <ProtectedRoute allowed={["manager"]}>
+            <AssignTask />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Task Approvals */}
+      <Route
+        path="/taskApprovals"
+        element={
+          <ProtectedRoute allowed={["manager"]}>
+            <TaskApprovals />
           </ProtectedRoute>
         }
       />
