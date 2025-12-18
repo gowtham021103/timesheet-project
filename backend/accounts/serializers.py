@@ -40,3 +40,29 @@ class LoginSerializer(TokenObtainPairSerializer):
         data["role"] = self.user.role
         data["username"] = self.user.username
         return data
+
+
+class EmployeeCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["username", "password", "role"]
+
+    def create(self, validated_data):
+        password = validated_data.pop("password")
+        user = User(**validated_data)
+        user.set_password(password)
+        user.save()
+        return user
+    
+class EmployeeListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["id", "username", "email", "role", "is_active"]
+
+class EmployeeSerializer(serializers.ModelSerializer):
+    role = serializers.CharField(default="Employee")
+    status = serializers.CharField(default="Active")
+
+    class Meta:
+        model = User
+        fields = ["id", "username", "email", "role", "status"]

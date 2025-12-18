@@ -1,13 +1,13 @@
 import axios from "axios";
 
 const axiosClient = axios.create({
-  baseURL: "http://127.0.0.1:8000/api",
+  baseURL: "http://127.0.0.1:8000/api/",
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-// 🔑 Attach access token automatically
+// 🔑 Attach access token
 axiosClient.interceptors.request.use((config) => {
   const token = localStorage.getItem("access");
   if (token) {
@@ -16,7 +16,7 @@ axiosClient.interceptors.request.use((config) => {
   return config;
 });
 
-// 🔄 Auto refresh expired token
+// 🔄 Refresh token automatically
 axiosClient.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -38,17 +38,11 @@ axiosClient.interceptors.response.use(
         );
 
         localStorage.setItem("access", res.data.access);
-
         originalRequest.headers.Authorization = `Bearer ${res.data.access}`;
 
         return axiosClient(originalRequest);
-      } catch (err) {
-        console.warn("Refresh token expired → logout");
-
-        localStorage.removeItem("access");
-        localStorage.removeItem("refresh");
-        localStorage.removeItem("role");
-
+      } catch {
+        localStorage.clear();
         window.location.href = "/login";
       }
     }

@@ -1,49 +1,79 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
 import Sidebar from "./Sidebar";
-
-
-const employeesData = [
-  { id: 1, name: "John Doe", role: "Developer", status: "Active" },
-  { id: 2, name: "Raihana", role: "Designer", status: "Active" },
-  { id: 3, name: "Arun", role: "Tester", status: "On Leave" },
-  { id: 4, name: "Meena", role: "HR", status: "Active" },
-];
+import axiosClient from "../api/axiosClient";
 
 export default function EmployeeTable() {
+  const [employees, setEmployees] = useState([]);
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  const filtered = employeesData.filter((emp) =>
-    emp.name.toLowerCase().includes(search.toLowerCase())
+  // 🔄 Fetch employees from backend
+  const loadEmployees = async () => {
+    try {
+      const res = await axiosClient.get("employees/");
+      setEmployees(res.data);
+    } catch (err) {
+      console.error("Failed to fetch employees", err);
+      setError("Failed to load employees");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadEmployees();
+  }, []);
+
+  // 🔍 Search filter
+  const filtered = employees.filter((emp) =>
+    emp.username.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
-
     <div className="layout">
-
       <Sidebar />
+
       <div className="main">
-      <SearchBar setSearch={setSearch} />
-      <table>
-        <thead>
-          <tr className="table-head">
-            <th>ID</th>
-            <th>Name</th>
-            <th>Role</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody className="table-body">
-          {filtered.map((emp) => (
-            <tr key={emp.id}>
-              <td>{emp.id}</td>
-              <td>{emp.name}</td>
-              <td>{emp.role}</td>
-              <td>{emp.status}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+        <SearchBar setSearch={setSearch} />
+
+        {loading && <p>Loading employees...</p>}
+        {error && <p className="error">{error}</p>}
+
+        {!loading && !error && (
+          <table className="employee-table">
+            <thead>
+              <tr className="table-head">
+                <th>ID</th>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+
+            <tbody className="table-body">
+              {filtered.length === 0 ? (
+                <tr>
+                  <td colSpan="4">No employees found</td>
+                </tr>
+              ) : (
+                filtered.map((emp) => (
+                  <tr key={emp.id}>
+                    <td>{emp.id}</td>
+                    <td>{emp.username}</td>
+                    <td>{emp.role}</td>
+                    <td>
+                      <span className={`status ${emp.status.toLowerCase()}`}>
+                        {emp.status}
+                      </span>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );

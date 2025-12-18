@@ -9,6 +9,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAdminUser
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.generics import ListAPIView
 
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -79,3 +80,12 @@ class LogoutView(APIView):
             return Response({"detail": "Logged out"})
         except Exception:
             return Response({"detail": "Invalid token"}, status=400)
+        
+
+class EmployeeListView(ListAPIView):
+    queryset = User.objects.filter(role="employee")
+    serializer_class = UserSerializer
+    permission_classes = [IsAdminUser]
+
+    def get_queryset(self):
+        return User.objects.filter(role="employee")
