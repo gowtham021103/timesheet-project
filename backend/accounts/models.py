@@ -14,6 +14,7 @@ class User(AbstractUser):
         choices=ROLE_CHOICES,
         default="employee",
     )
+    employee_id = models.CharField(max_length=50, blank=True, null=True, unique=True)
 
     def save(self, *args, **kwargs):
         if self.is_superuser:

@@ -1,21 +1,21 @@
-import axiosInstance from "./axiosInstance";
+import axiosClient from "./axiosClient";
 
 // Get all tasks
 export const getTasks = () => {
-  return axiosInstance.get("/tasks/");
+  return axiosClient.get("/tasks/");
 };
 
 // Assign a new task
 export const assignTask = (data) => {
-  return axiosInstance.post("/tasks/", data);
+  return axiosClient.post("/tasks/", data);
 };
 
 // Update task status (approve/reject)
 export const updateTask = (id, data) => {
-  return axiosInstance.patch(`/tasks/${id}/`, data);
+  return axiosClient.patch(`/tasks/${id}/`, data);
 };
 
 // Delete task
 export const deleteTask = (id) => {
-  return axiosInstance.delete(`/tasks/${id}/`);
+  return axiosClient.delete(`/tasks/${id}/`);
 };

@@ -8,7 +8,8 @@ from .serializers import RegisterSerializer, LoginSerializer, UserSerializer
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAdminUser
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework import status
+from django.shortcuts import get_object_or_404
 
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -69,13 +70,77 @@ class CreateClientAdminView(APIView):
         return Response({"message": "Client admin created"})
 
 
-class LogoutView(APIView):
+class EmployeeListCreateView(APIView):
     permission_classes = [IsAuthenticated]
 
+    def get(self, request):
+        # only allow non-employee users to list employees
+        if getattr(request.user, "role", "employee") == "employee":
+            return Response({"detail": "Forbidden"}, status=403)
+
+        employees = User.objects.filter(role="employee")
+        serializer = UserSerializer(employees, many=True)
+        return Response(serializer.data)
+
     def post(self, request):
-        try:
-            token = RefreshToken(request.data["refresh"])
-            token.blacklist()
-            return Response({"detail": "Logged out"})
-        except Exception:
-            return Response({"detail": "Invalid token"}, status=400)
+        if getattr(request.user, "role", "employee") == "employee":
+            return Response({"detail": "Forbidden"}, status=403)
+
+        data = request.data
+        # map incoming frontend `name` -> first_name, and require email
+        name = data.get("name") or data.get("first_name")
+        email = data.get("email")
+        if not name or not email:
+            return Response({"detail": "name and email are required"}, status=400)
+
+        username = email
+        # create a simple default password; frontend may implement password reset flow
+        password = data.get("password", "password123")
+
+        user = User.objects.create_user(
+            username=username,
+            email=email,
+            first_name=name,
+            password=password,
+            role=data.get("role", "employee"),
+        )
+
+        # optional employee_id
+        if data.get("employee_id"):
+            user.employee_id = data.get("employee_id")
+            user.save()
+
+        return Response({"message": "Employee created"}, status=201)
+
+
+class EmployeeDetailView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, pk):
+        if getattr(request.user, "role", "employee") == "employee":
+            return Response({"detail": "Forbidden"}, status=403)
+
+        user = get_object_or_404(User, pk=pk, role="employee")
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+        if getattr(request.user, "role", "employee") == "employee":
+            return Response({"detail": "Forbidden"}, status=403)
+
+        user = get_object_or_404(User, pk=pk, role="employee")
+        data = request.data
+        user.first_name = data.get("name", user.first_name)
+        user.email = data.get("email", user.email)
+        if data.get("employee_id") is not None:
+            user.employee_id = data.get("employee_id")
+        user.save()
+        return Response({"message": "Employee updated"})
+
+    def delete(self, request, pk):
+        if getattr(request.user, "role", "employee") == "employee":
+            return Response({"detail": "Forbidden"}, status=403)
+
+        user = get_object_or_404(User, pk=pk, role="employee")
+        user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

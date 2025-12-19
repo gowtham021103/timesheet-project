@@ -41,17 +41,18 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'accounts','projects','tasks','timesheets',
+    'clientapp', 
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -123,7 +124,11 @@ STATIC_URL = 'static/'
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",   # Vite default
+    "http://localhost:5174",   # local dev (vite alternate port)
 ]
+
+# During development you can set this to True to allow all origins
+# CORS_ALLOW_ALL_ORIGINS = True
 
 
 AUTH_USER_MODEL = "accounts.User"
