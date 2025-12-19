@@ -130,4 +130,8 @@ const TaskApprovals = () => {
   );
 };
 
+<<<<<<< HEAD
 export default TaskApprovals;
+=======
+export default TaskApprovals;
+>>>>>>> c69b0d5 (modified backend)

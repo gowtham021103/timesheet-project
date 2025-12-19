@@ -170,4 +170,8 @@ export default function Router() {
       <Route path="*" element={<Navigate to="/404" replace />} />
     </Routes>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> c69b0d5 (modified backend)

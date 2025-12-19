@@ -58,4 +58,8 @@ export default function Sidebar() {
       </nav>
     </aside>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> c69b0d5 (modified backend)
