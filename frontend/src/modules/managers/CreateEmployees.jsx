@@ -61,8 +61,4 @@ const CreateEmployeePage = () => {
   );
 };
 
-<<<<<<< HEAD
 export default CreateEmployeePage;
-=======
-export default CreateEmployeePage;
->>>>>>> c69b0d5 (modified backend)

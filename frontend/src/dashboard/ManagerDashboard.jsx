@@ -14,11 +14,10 @@ const ManagerDashboard = () => {
       <Sidebar />
 
       <div className="dashboard-content">
-<<<<<<< HEAD
+
         <h2 className="page-heading">Manager Dashboard Overview</h2>
-=======
-        <h2 className="page-heading">Dashboard Overview</h2>
->>>>>>> c69b0d5 (modified backend)
+
+
 
         <div className="stats-grid">
           {stats.map((item, index) => (
