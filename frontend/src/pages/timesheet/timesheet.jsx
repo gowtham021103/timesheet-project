@@ -14,7 +14,7 @@ function Timesheet() {
   const fiveDaysAgo = new Date();
   fiveDaysAgo.setDate(today.getDate() - 5);
 
-  // 📥 Fetch timesheets
+  // 📥 Load from backend
   const loadTimesheets = async () => {
     try {
       const res = await axiosClient.get("timesheets/");
@@ -28,7 +28,7 @@ function Timesheet() {
     loadTimesheets();
   }, []);
 
-  // ➕ Add timesheet
+  // ➕ Save to backend
   const handleAddRecord = async () => {
     if (!hours || !task) {
       alert("Please fill hours and task");
@@ -44,21 +44,19 @@ function Timesheet() {
 
       setHours("");
       setTask("");
-      loadTimesheets();
+      loadTimesheets(); // 🔄 refresh list
     } catch (err) {
       console.error("Failed to add timesheet", err);
     }
   };
 
-  // 📅 Mark dates on calendar
   const markedDates = records.map((r) =>
     new Date(r.date).toDateString()
   );
 
   const tileClassName = ({ date, view }) => {
     if (view === "month") {
-      const dateString = date.toDateString();
-      if (markedDates.includes(dateString)) {
+      if (markedDates.includes(date.toDateString())) {
         return "marked-date";
       }
     }
@@ -72,7 +70,6 @@ function Timesheet() {
       </div>
 
       <div className="app-content">
-        {/* Calendar */}
         <div className="calendar-section">
           <Calendar
             onChange={setDate}
@@ -83,19 +80,18 @@ function Timesheet() {
           />
         </div>
 
-        {/* Form */}
         <div className="form-section">
           <h2>Add Task</h2>
 
           <div className="form-group">
-            <label>Selected Date</label>
+            <label>Date</label>
             <div className="date-display">
               {date.toDateString()}
             </div>
           </div>
 
           <div className="form-group">
-            <label>Working Hours</label>
+            <label>Hours</label>
             <input
               type="number"
               value={hours}
@@ -107,7 +103,7 @@ function Timesheet() {
           </div>
 
           <div className="form-group">
-            <label>Task Description</label>
+            <label>Task</label>
             <textarea
               value={task}
               onChange={(e) => setTask(e.target.value)}
@@ -120,7 +116,6 @@ function Timesheet() {
         </div>
       </div>
 
-      {/* Table */}
       <div className="table-section">
         <h2>Timesheet Records</h2>
 

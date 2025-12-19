@@ -8,13 +8,16 @@ const axiosClient = axios.create({
 });
 
 // 🔑 Attach access token
-axiosClient.interceptors.request.use((config) => {
-  const token = localStorage.getItem("access");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
+axiosClient.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("access");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
 // 🔄 Refresh token automatically
 axiosClient.interceptors.response.use(
@@ -31,7 +34,7 @@ axiosClient.interceptors.response.use(
 
       try {
         const res = await axios.post(
-          "http://127.0.0.1:8000/api/accounts/token/refresh/",
+          "http://127.0.0.1:8000/api/token/refresh/",
           {
             refresh: localStorage.getItem("refresh"),
           }
@@ -41,7 +44,7 @@ axiosClient.interceptors.response.use(
         originalRequest.headers.Authorization = `Bearer ${res.data.access}`;
 
         return axiosClient(originalRequest);
-      } catch {
+      } catch (err) {
         localStorage.clear();
         window.location.href = "/login";
       }

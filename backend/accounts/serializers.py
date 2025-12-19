@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from .models import User
+from timesheets.models import Timesheet
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -66,3 +67,20 @@ class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["id", "username", "email", "role", "status"]
+
+
+class TimesheetSerializer(serializers.ModelSerializer):
+    employee_name = serializers.CharField(
+        source="employee.username", read_only=True
+    )
+
+    class Meta:
+        model = Timesheet
+        fields = [
+            "id",
+            "employee_name",
+            "date",
+            "hours",
+            "task",
+            "created_at",
+        ]

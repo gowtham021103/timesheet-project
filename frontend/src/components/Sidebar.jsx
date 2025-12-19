@@ -26,22 +26,18 @@ export default function Sidebar() {
       <nav className="sidebar-nav">
         
         <Link to="/" className="nav-item">
-          <span className="nav-icon">📊</span>
           <span className="nav-label">Dashboard</span>
         </Link>
 
         <Link to="/timesheets" className="nav-item">
-          <span className="nav-icon">➕</span>
           <span className="nav-label">Create Timesheets</span>
         </Link>
 
         <Link to="/view-timesheets" className="nav-item">
-          <span className="nav-icon">📝</span>
           <span className="nav-label">View Timesheet</span>
         </Link>
 
         <Link to="/employees" className="nav-item">
-          <span className="nav-icon">👥</span>
           <span className="nav-label">Employees</span>
         </Link>
 
