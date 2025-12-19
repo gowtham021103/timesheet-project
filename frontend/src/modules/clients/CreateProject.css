@@ -1,0 +1,85 @@
+/* CreateProject.css */
+
+.create-project {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px 25px;
+  background: #fdfdfd;
+  border-radius: 15px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+.create-project h2 {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #222;
+}
+
+.create-project form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.create-project input,
+.create-project textarea,
+.create-project select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d0d0d0;
+  border-radius: 10px;
+  font-size: 15px;
+  transition: 0.2s;
+  background-color: #fafafa;
+}
+
+.create-project textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.create-project input:focus,
+.create-project textarea:focus,
+.create-project select:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 6px rgba(59, 130, 246, 0.3);
+  outline: none;
+}
+
+.create-project button {
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  background-color: #3b82f6;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.create-project button:hover:not(:disabled) {
+  background-color: #2563eb;
+}
+
+.create-project button:disabled {
+  background-color: #a5b4fc;
+  cursor: not-allowed;
+}
+
+.create-project p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.create-project p[style*="red"] {
+  color: #dc2626; /* Red for errors */
+}
+
+.create-project p[style*="green"] {
+  color: #16a34a; /* Green for success */
+}
