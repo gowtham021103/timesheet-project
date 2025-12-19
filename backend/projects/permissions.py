@@ -5,5 +5,5 @@ class IsClient(BasePermission):
         return (
             request.user
             and request.user.is_authenticated
-            and request.user.role == 'CLIENT'
+            and getattr(request.user, "role", None) == "CLIENT"
         )

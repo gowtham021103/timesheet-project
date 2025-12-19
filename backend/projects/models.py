@@ -6,7 +6,7 @@ User = get_user_model()
 class Project(models.Model):
     STATUS_CHOICES = [
         ("Not Started", "Not Started"),
-        ("Ongoing", "Ongoing"),
+        ("In Progress", "In Progress"),
         ("Completed", "Completed"),
     ]
 
@@ -18,14 +18,20 @@ class Project(models.Model):
         default="Not Started"
     )
     deadline = models.DateField(null=True, blank=True)
-
+    created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name="projects"
     )
 
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.title
+    # Assignment fields
+    assigned_to = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        related_name="assigned_projects",
+        null=True,
+        blank=True,
+    )
+    assignment_notes = models.TextField(blank=True)
+    assigned_at = models.DateTimeField(null=True, blank=True)
