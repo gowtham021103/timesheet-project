@@ -20,3 +20,8 @@ const projectApi = {
 };
 
 export default projectApi;
+
+// Named exports for convenience / backward-compatibility
+export const createProject = projectApi.create;
+export const listProjects = projectApi.list;
+export const assignProject = projectApi.assign;

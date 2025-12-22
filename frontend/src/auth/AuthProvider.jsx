@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import authApi from "../api/authApi";
-import { useNavigate } from "react-router-dom"; // ✅ FIX
 
 const AuthContext = createContext(null);
 
@@ -8,17 +8,17 @@ export function useAuth() {
   return useContext(AuthContext);
 }
 
-export default function AuthProvider({ children }) {
+export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate(); // ✅ FIX
+  const navigate = useNavigate();
 
-  // 🔄 Load profile on app start
+  // 🔄 Load user profile on app start
   useEffect(() => {
     async function loadProfile() {
-      const token = localStorage.getItem("access");
+      const access = localStorage.getItem("access");
 
-      if (!token) {
+      if (!access) {
         setLoading(false);
         return;
       }
@@ -27,7 +27,7 @@ export default function AuthProvider({ children }) {
         const profile = await authApi.profile();
         setUser(profile);
       } catch (err) {
-        console.warn("Auth expired");
+        console.warn("Session expired");
         localStorage.removeItem("access");
         localStorage.removeItem("refresh");
         setUser(null);
@@ -39,7 +39,7 @@ export default function AuthProvider({ children }) {
     loadProfile();
   }, []);
 
-  // 🔐 Login (NO navigation here)
+  // 🔐 Login
   async function login(username, password) {
     const data = await authApi.login(username, password);
 
@@ -49,7 +49,7 @@ export default function AuthProvider({ children }) {
     const profile = await authApi.profile();
     setUser(profile);
 
-    return profile; // ✅ correct
+    return profile;
   }
 
   // 📝 Register
@@ -57,12 +57,12 @@ export default function AuthProvider({ children }) {
     await authApi.register(username, email, password);
   }
 
-  // 🚪 Logout (FIXED)
+  // 🚪 Logout
   function logout() {
     localStorage.removeItem("access");
     localStorage.removeItem("refresh");
     setUser(null);
-    navigate("/login", { replace: true }); // ✅ FIX
+    navigate("/login", { replace: true });
   }
 
   return (

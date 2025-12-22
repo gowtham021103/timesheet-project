@@ -10,19 +10,19 @@ export default function EmployeeTable() {
   const [error, setError] = useState("");
 
   // 🔄 Fetch employees from backend
-  const loadEmployees = async () => {
-    try {
-      const res = await axiosClient.get("employees/");
-      setEmployees(res.data);
-    } catch (err) {
-      console.error("Failed to fetch employees", err);
-      setError("Failed to load employees");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    async function loadEmployees() {
+      try {
+        const res = await axiosClient.get("employees/");
+        setEmployees(res.data);
+      } catch (err) {
+        console.error("Failed to fetch employees", err);
+        setError("Failed to load employees");
+      } finally {
+        setLoading(false);
+      }
+    }
+
     loadEmployees();
   }, []);
 

@@ -1,40 +1,54 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
+/* AUTH */
 import Login from "./auth/Login";
 import Register from "./auth/Register";
+import { useAuth } from "./auth/AuthProvider";
 
+/* DASHBOARDS */
 import AdminDashboard from "./dashboard/AdminDashboard";
 import ManagerDashboard from "./dashboard/ManagerDashboard";
 import EmployeeDashboard from "./dashboard/EmployeeDashboard";
+import ClientDashboard from "./dashboard/ClientDashboard";
 
+/* CLIENT MODULES */
+import CreateProject from "./modules/clients/CreateProject";
+import AssignProject from "./modules/clients/AssignProject";
+import ProjectList from "./modules/clients/ProjectList";
+import ClientReports from "./modules/clients/ClientReports";
+import AddEmployee from "./modules/clients/AddEmployee";
+
+/* TIMESHEETS */
 import TimesheetList from "./pages/TimesheetList";
 import TimesheetForm from "./pages/TimesheetForm";
-/* import EmployeeList from "./pages/EmployeeList"; */
-import NotFound from "./pages/NotFound";
-
-import ProtectedRoute from "./components/ProtectedRoute";
-import { useAuth } from "./auth/AuthProvider";
-
 import ViewTimesheets from "./pages/timesheet/viewtimesheet";
 
+/* EMPLOYEES */
 import EmployeeTable from "./components/EmployeeTable";
+
+/* LAYOUT & GUARDS */
+import ProtectedRoute from "./components/ProtectedRoute";
+import DashboardLayout from "./layout/DashboardLayout";
+
+/* MISC */
+import NotFound from "./pages/NotFound";
 
 export default function Router() {
   const { user, loading } = useAuth();
 
-  if (loading) return null; // ⛔ prevent premature redirects
+  if (loading) return null;
 
   const roleDashboard = {
     admin: "/admin",
     manager: "/manager",
     employee: "/employee",
-    client_admin: "/client-admin",
+    client_admin: "/client-dashboard",
   };
 
   return (
     <Routes>
-      {/* PUBLIC ROUTES */}
+      {/* PUBLIC */}
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
@@ -48,7 +62,7 @@ export default function Router() {
         }
       />
 
-      {/* DASHBOARDS */}
+      {/* ADMIN */}
       <Route
         path="/admin"
         element={
@@ -58,6 +72,7 @@ export default function Router() {
         }
       />
 
+      {/* CLIENT ADMIN (uses admin dashboard) */}
       <Route
         path="/client-admin"
         element={
@@ -67,6 +82,7 @@ export default function Router() {
         }
       />
 
+      {/* MANAGER */}
       <Route
         path="/manager"
         element={
@@ -76,6 +92,7 @@ export default function Router() {
         }
       />
 
+      {/* EMPLOYEE */}
       <Route
         path="/employee"
         element={
@@ -84,6 +101,22 @@ export default function Router() {
           </ProtectedRoute>
         }
       />
+
+      {/* CLIENT (LAYOUT-BASED ROUTES) */}
+      <Route
+        element={
+          <ProtectedRoute allowed={["client_admin"]}>
+            <DashboardLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route path="/client-dashboard" element={<ClientDashboard />} />
+        <Route path="/create-project" element={<CreateProject />} />
+        <Route path="/assign-project" element={<AssignProject />} />
+        <Route path="/project-list" element={<ProjectList />} />
+        <Route path="/reports" element={<ClientReports />} />
+        <Route path="/add-employee" element={<AddEmployee />} />
+      </Route>
 
       {/* TIMESHEETS */}
       <Route
@@ -113,7 +146,14 @@ export default function Router() {
         }
       />
 
-      <Route path="/view-timesheets" element={<ViewTimesheets />} />
+      <Route
+        path="/view-timesheets"
+        element={
+          <ProtectedRoute>
+            <ViewTimesheets />
+          </ProtectedRoute>
+        }
+      />
 
       {/* EMPLOYEES */}
       <Route
