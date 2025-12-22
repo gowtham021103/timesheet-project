@@ -12,7 +12,7 @@ import TimesheetList from "./pages/TimesheetList";
 import TimesheetForm from "./pages/TimesheetForm";
 import EmployeeList from "./pages/EmployeeList";
 
-import CreateEmployeePage from "./modules/managers/CreateEmployees"; // Added import
+import TeamLeadSelectionPage from "./modules/managers/TeamLeadSelection"; // corrected import name
 import ViewEmployees from "./modules/managers/Employees"; // Added import
 import AssignTask from "./modules/managers/AssignTask"; // Added import
 import TaskApprovals from "./modules/managers/TaskApprovals"; // Added import
@@ -125,12 +125,12 @@ export default function Router() {
         }
       />
 
-      {/* CREATE EMPLOYEES */}
+      {/* TEAM LEAD SELECTION */}
       <Route
-        path="/createEmployees"
+        path="/teamleadselection"
         element={
           <ProtectedRoute allowed={["manager"]}>
-            <CreateEmployeePage />
+            <TeamLeadSelectionPage />
           </ProtectedRoute>
         }
       />

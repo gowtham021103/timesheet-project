@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getTasks, updateTask } from "../../api/taskService";
 import "./manager.css";
-import Sidebar from "./ManagerSidebar";
+import Sidebar from "./TeamLeadSidebar";
 
 
 const TaskApprovals = () => {

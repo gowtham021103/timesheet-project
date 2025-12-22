@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { assignTask } from "../../api/taskService";
-import Sidebar from "./ManagerSidebar";
+import Sidebar from "./TeamLeadSidebar";
 import { employees as sampleEmployees } from "../../sample-data";
 
 import "./manager.css";
@@ -63,12 +63,12 @@ const AssignTask = () => {
     <div className="app-layout">
       <Sidebar />
       <div className="task-container">
-        <h2 className="page-heading">Assign Task</h2>
+        <h2 className="page-heading">Assign Project</h2>
         {error && <p className="error-msg">{error}</p>}
 
         <div className="form-card">
           <form onSubmit={handleSubmit}>
-            <label>Task Title *</label>
+            <label>Project Title *</label>
             <input
               type="text"
               name="title"
@@ -108,7 +108,7 @@ const AssignTask = () => {
             />
 
             <button type="submit" className="primary-btn" disabled={loading}>
-              {loading ? "Assigning..." : "Assign Task"}
+              {loading ? "Assigning..." : "Assign Project"}
             </button>
           </form>
         </div>

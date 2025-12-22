@@ -5,6 +5,7 @@ class User(AbstractUser):
     ROLE_CHOICES = (
         ("admin", "Admin"),
         ("client_admin", "Client Admin"),
+        ("team_lead", "Team Lead"),
         ("manager", "Manager"),
         ("employee", "Employee"),
     )

@@ -1,4 +1,4 @@
-import Sidebar from "../modules/managers/ManagerSidebar";
+import Sidebar from "../modules/managers/TeamLeadSidebar";
 import "../styles/dashboard.css";
 
 const ManagerDashboard = () => {

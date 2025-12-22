@@ -31,9 +31,9 @@ export default function Sidebar() {
           <span className="nav-label">Dashboard</span>
         </Link>
 
-        <Link to="/createEmployees" className="nav-item">
+        <Link to="/teamleadselection" className="nav-item">
           
-          <span className="nav-label">Create Employees</span>
+          <span className="nav-label">Team Lead Selection</span>
         </Link>
 
         <Link to="/viewEmployees" className="nav-item">
@@ -43,7 +43,7 @@ export default function Sidebar() {
 
         <Link to="/assignTask" className="nav-item">
           
-          <span className="nav-label">Assign Task</span>
+          <span className="nav-label">Assign Project</span>
         </Link>
 
         <Link to="/taskApprovals" className="nav-item">

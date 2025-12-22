@@ -10,6 +10,7 @@ from rest_framework.permissions import IsAdminUser
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
 from django.shortcuts import get_object_or_404
+from django.db import IntegrityError
 
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -78,7 +79,8 @@ class EmployeeListCreateView(APIView):
         if getattr(request.user, "role", "employee") == "employee":
             return Response({"detail": "Forbidden"}, status=403)
 
-        employees = User.objects.filter(role="employee")
+        # include both regular employees and team leads so manager can select/change leads
+        employees = User.objects.filter(role__in=["employee", "team_lead"]).order_by("first_name")
         serializer = UserSerializer(employees, many=True)
         return Response(serializer.data)
 
@@ -96,14 +98,20 @@ class EmployeeListCreateView(APIView):
         username = email
         # create a simple default password; frontend may implement password reset flow
         password = data.get("password", "password123")
+        # guard against duplicate usernames (email)
+        if User.objects.filter(username=username).exists():
+            return Response({"detail": "A user with that email/username already exists."}, status=400)
 
-        user = User.objects.create_user(
-            username=username,
-            email=email,
-            first_name=name,
-            password=password,
-            role=data.get("role", "employee"),
-        )
+        try:
+            user = User.objects.create_user(
+                username=username,
+                email=email,
+                first_name=name,
+                password=password,
+                role=data.get("role", "employee"),
+            )
+        except IntegrityError:
+            return Response({"detail": "Could not create user — username conflict."}, status=400)
 
         # optional employee_id
         if data.get("employee_id"):
@@ -119,19 +127,30 @@ class EmployeeDetailView(APIView):
     def get(self, request, pk):
         if getattr(request.user, "role", "employee") == "employee":
             return Response({"detail": "Forbidden"}, status=403)
-
-        user = get_object_or_404(User, pk=pk, role="employee")
+        user = get_object_or_404(User, pk=pk)
+        # only allow viewing employee-like users
+        if user.role not in ("employee", "team_lead"):
+            return Response({"detail": "Not found"}, status=404)
         serializer = UserSerializer(user)
         return Response(serializer.data)
 
     def put(self, request, pk):
         if getattr(request.user, "role", "employee") == "employee":
             return Response({"detail": "Forbidden"}, status=403)
+        user = get_object_or_404(User, pk=pk)
+        # only allow updating employee-like users
+        if user.role not in ("employee", "team_lead"):
+            return Response({"detail": "Not found"}, status=404)
 
-        user = get_object_or_404(User, pk=pk, role="employee")
         data = request.data
         user.first_name = data.get("name", user.first_name)
         user.email = data.get("email", user.email)
+        # allow updating role (e.g., set team_lead)
+        new_role = data.get("role")
+        if new_role:
+            valid_roles = [r[0] for r in User.ROLE_CHOICES]
+            if new_role in valid_roles:
+                user.role = new_role
         if data.get("employee_id") is not None:
             user.employee_id = data.get("employee_id")
         user.save()
@@ -140,7 +159,8 @@ class EmployeeDetailView(APIView):
     def delete(self, request, pk):
         if getattr(request.user, "role", "employee") == "employee":
             return Response({"detail": "Forbidden"}, status=403)
-
-        user = get_object_or_404(User, pk=pk, role="employee")
+        user = get_object_or_404(User, pk=pk)
+        if user.role not in ("employee", "team_lead"):
+            return Response({"detail": "Not found"}, status=404)
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
