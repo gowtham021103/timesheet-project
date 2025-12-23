@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { getEmployees, deleteEmployee } from "../../api/employeeService";
-import { useNavigate } from "react-router-dom";
 import Sidebar from "./TeamLeadSidebar";
 import "./manager.css";
 
@@ -10,6 +10,7 @@ const Employees = () => {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   // Fetch employees
   const fetchEmployees = async () => {
@@ -57,6 +58,37 @@ const Employees = () => {
       alert("Failed to delete employee");
     }
   };
+  // show-only filter ids (transient)
+  const [filterIds, setFilterIds] = useState([]);
+
+  useEffect(() => {
+    try {
+      // prefer selection from URL ?selected=1 or ?selected=1,2
+      const params = new URLSearchParams(location.search);
+      const sel = params.get("selected");
+      if (sel) {
+        const parts = String(sel).split(",").map((s) => s.trim()).filter(Boolean);
+        if (parts.length > 0) {
+          setFilterIds(parts.map(String));
+          return;
+        }
+      }
+
+      // fallback to localStorage if URL param not present
+      const raw = localStorage.getItem("selectedEmployees");
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setFilterIds(parsed.map(String));
+        }
+        try { localStorage.removeItem("selectedEmployees"); } catch (e) {}
+      }
+    } catch (e) {}
+  }, []);
+
+  const displayList = filterIds && filterIds.length > 0
+    ? employees.filter((e) => filterIds.indexOf(String(e.id)) !== -1)
+    : employees;
 
   return (
     <div className="app-layout">
@@ -72,6 +104,21 @@ const Employees = () => {
             <button className="secondary-btn" onClick={fetchEmployees} disabled={loading}>
               {loading ? "Refreshing..." : "Refresh"}
             </button>
+            {filterIds && filterIds.length > 0 && (
+              <button
+                className="secondary-btn"
+                onClick={() => {
+                  setFilterIds([]);
+                  // remove query param if present
+                  try {
+                    navigate('/viewEmployees', { replace: true });
+                  } catch (e) {}
+                  fetchEmployees();
+                }}
+              >
+                Show All
+              </button>
+            )}
           </div>
         </div>
 
@@ -81,7 +128,7 @@ const Employees = () => {
           <div className="table-card">
             {loading ? (
               <p>Loading employees...</p>
-            ) : employees.length === 0 ? (
+            ) : displayList.length === 0 ? (
               <div className="empty-state">No employees available.</div>
             ) : (
               <table className="simple-table">
@@ -93,7 +140,7 @@ const Employees = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {employees.map((emp) => {
+                  {displayList.map((emp) => {
                     const displayName = emp.first_name || emp.name || emp.username || "Unnamed";
                     const displayRole = emp.role === "team_lead" ? "Team Lead" : emp.role || "Employee";
                     const initials = displayName

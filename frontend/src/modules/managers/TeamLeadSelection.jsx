@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getEmployees, updateEmployee } from "../../api/employeeService";
 import Sidebar from "./TeamLeadSidebar";
 import "./manager.css";
@@ -11,6 +12,8 @@ const TeamLeadSelectionPage = () => {
   const [fetching, setFetching] = useState(false);
   const [selectedLead, setSelectedLead] = useState(null);
   const [isDummy, setIsDummy] = useState(false);
+  const [showOnlySelected, setShowOnlySelected] = useState(false);
+  const navigate = useNavigate();
 
   const fetchEmployees = async () => {
     try {
@@ -52,7 +55,13 @@ const TeamLeadSelectionPage = () => {
         try {
           localStorage.setItem("employeesUpdatedAt", Date.now().toString());
         } catch (e) {}
+        try { localStorage.setItem("selectedEmployees", JSON.stringify([String(selectedLead)])); } catch (e) {}
         window.dispatchEvent(new CustomEvent("employeesUpdated"));
+        // immediately show only this selected employee in the selection view
+        setEmployees((prev) => prev.filter((emp) => String(emp.id) === String(selectedLead)));
+        setShowOnlySelected(true);
+        // navigate and include selected id in query param for reliable filtering
+        navigate(`/viewEmployees?selected=${encodeURIComponent(String(selectedLead))}`);
       } else {
         // backend expects a role value; use lowercase 'team_lead' or backend-specific value
         await updateEmployee(selectedLead, { role: "team_lead" });
@@ -61,7 +70,13 @@ const TeamLeadSelectionPage = () => {
         try {
           localStorage.setItem("employeesUpdatedAt", Date.now().toString());
         } catch (e) {}
+        try { localStorage.setItem("selectedEmployees", JSON.stringify([String(selectedLead)])); } catch (e) {}
         window.dispatchEvent(new CustomEvent("employeesUpdated"));
+        // immediately filter selection UI to the chosen employee
+        setEmployees((prev) => prev.filter((emp) => String(emp.id) === String(selectedLead)));
+        setShowOnlySelected(true);
+        // navigate and include selected id in query param for reliable filtering
+        navigate(`/viewEmployees?selected=${encodeURIComponent(String(selectedLead))}`);
       }
     } catch (err) {
       console.error(err);

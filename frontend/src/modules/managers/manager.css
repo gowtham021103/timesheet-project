@@ -464,3 +464,10 @@ input[type="radio"] {
 /* small touches */
 .simple-table tbody tr td:first-child { font-weight: 600; }
 .simple-table tbody tr td:nth-child(2) { color: #6b7280; font-size: 13px; }
+
+
+
+.nav-item.logout-btn {
+  margin-left: 22px;
+  width: 60%;
+}
