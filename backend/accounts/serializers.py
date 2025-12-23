@@ -5,9 +5,14 @@ from timesheets.models import Timesheet
 
 
 class UserSerializer(serializers.ModelSerializer):
+    status = serializers.SerializerMethodField()
+
     class Meta:
         model = User
-        fields = ["id", "username", "email", "role"]
+        fields = ["id", "username", "email", "role", "status"]
+
+    def get_status(self, obj):
+        return "Active" if obj.is_active else "Inactive"
 
 
 class RegisterSerializer(serializers.ModelSerializer):

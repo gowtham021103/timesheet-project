@@ -87,7 +87,7 @@ class LogoutView(APIView):
 class IsAdminManagerOrTeamLead(BasePermission):
     def has_permission(self, request, view):
         return request.user.is_authenticated and (
-            request.user.role in ["admin", "manager", "team_lead"]
+            request.user.role in ["admin", "manager", "team_lead", "hr"]
         )
 
 class EmployeeListView(ListAPIView):

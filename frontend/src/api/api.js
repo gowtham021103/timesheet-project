@@ -22,7 +22,7 @@ API.interceptors.request.use(
 // =====================
 
 // Employees
-export const getEmployees = () => API.get("/employees/");
+export const getEmployees = () => API.get("/accounts/employees/");
 
 // Tasks
 export const getTasks = () => API.get("/tasks/");
@@ -35,5 +35,9 @@ export const getProjects = () => API.get("/projects/");
 export const getTimesheets = () => API.get("/timesheets/");
 export const updateTimesheet = (id, data) =>
   API.put(`/timesheets/${id}/`, data);
+
+// Payroll
+export const getPayroll = () => API.get("/payroll/");
+export const createPayroll = (data) => API.post("/payroll/", data);
 
 export default API;

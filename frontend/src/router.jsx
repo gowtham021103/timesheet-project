@@ -12,6 +12,12 @@ import ManagerDashboard from "./dashboard/ManagerDashboard";
 import EmployeeDashboard from "./dashboard/EmployeeDashboard";
 import ClientDashboard from "./dashboard/ClientDashboard";
 import TeamLeadDashboard from "./dashboard/TeamLeadDashboard";
+import TeamLeadHome from "./modules/teamleads/Dashboard";
+import HRDashboard from "./dashboard/HRDashboard";
+import HRHome from "./modules/hr/Dashboard";
+import HREmployees from "./modules/hr/HREmployees";
+import HRTimesheets from "./modules/hr/HRTimesheets";
+import HRPayroll from "./modules/hr/HRPayroll";
 
 /* CLIENT MODULES */
 import CreateProject from "./modules/clients/CreateProject";
@@ -20,8 +26,9 @@ import ProjectList from "./modules/clients/ProjectList";
 import ClientReports from "./modules/clients/ClientReports";
 
 import AddEmployee from "./modules/clients/AddEmployee";
-import TeamLeadProjects from "./dashboard/TeamLeadProjects";
-import TeamLeadAssignTask from "./dashboard/TeamLeadAssignTask";
+import TeamLeadProjects from "./modules/teamleads/TeamLeadProject";
+import TeamLeadAssignTask from "./modules/teamleads/AssignTask";
+import TeamLeadTasks from "./modules/teamleads/TeamLeadTask";
 
 /* TIMESHEETS */
 import TimesheetList from "./pages/TimesheetList";
@@ -49,6 +56,7 @@ export default function Router() {
     employee: "/employee",
     client_admin: "/client-dashboard",
     team_lead: "/team-lead",
+    hr: "/hr",
   };
 
   return (
@@ -86,10 +94,27 @@ export default function Router() {
           </ProtectedRoute>
         }
       >
-        <Route index element={<div>Welcome, Team Lead!</div>} />
+        <Route index element={<TeamLeadHome />} />
         <Route path="projects" element={<TeamLeadProjects />} />
+        <Route path="tasks" element={<TeamLeadTasks />} />
         <Route path="assign-task" element={<TeamLeadAssignTask />} />
       </Route>
+
+      {/* HR */}
+      <Route
+        path="/hr"
+        element={
+          <ProtectedRoute allowed={["hr"]}>
+            <HRDashboard />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<HRHome />} />
+        <Route path="employees" element={<HREmployees />} />
+        <Route path="timesheets" element={<HRTimesheets />} />
+        <Route path="payroll" element={<HRPayroll />} />
+      </Route>
+
       {/* CLIENT ADMIN (uses admin dashboard) */}
       <Route
         path="/client-admin"

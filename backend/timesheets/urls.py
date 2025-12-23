@@ -1,10 +1,10 @@
-from django.urls import path
-from .views import (
-    TimesheetListCreateView,
-)
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import TimesheetViewSet
+
+router = DefaultRouter()
+router.register(r"timesheets", TimesheetViewSet, basename="timesheet")
 
 urlpatterns = [
-    
-    
-    path("timesheets/", TimesheetListCreateView.as_view(), name="timesheets"),
+    path("", include(router.urls)),
 ]

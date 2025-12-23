@@ -15,6 +15,7 @@ class Timesheet(models.Model):
         decimal_places=1
     )
     task = models.TextField()
+    approved = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

@@ -27,6 +27,9 @@ export default function SidebarTeamLead() {
         <Link to="/team-lead/projects" className="nav-item">
           <span className="nav-label">Projects</span>
         </Link>
+        <Link to="/team-lead/tasks" className="nav-item">
+          <span className="nav-label">Tasks</span>
+        </Link>
         <Link to="/team-lead/assign-task" className="nav-item">
           <span className="nav-label">Assign Task</span>
         </Link>

@@ -20,6 +20,7 @@ export default function Login() {
     employee: "/employee",
     client_admin: "/client-dashboard",
     team_lead: "/team-lead",
+    hr: "/hr",
   };
 
   const handleSubmit = async (e) => {

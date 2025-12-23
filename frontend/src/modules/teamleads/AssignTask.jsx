@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getProjects, createTask } from "../api/api";
-import { employees as sampleEmployees } from "../Sample-data";
-import sampleProjects from "../Sample-projects";
+import { getProjects, createTask, getEmployees } from "../../api/api";
 import "./AssignTask.css";
 
 function AssignTask() {
@@ -17,8 +15,16 @@ function AssignTask() {
   });
 
   useEffect(() => {
-    setEmployees(sampleEmployees);
-    setProjects(sampleProjects);
+    const fetchData = async () => {
+      try {
+        const [empRes, projRes] = await Promise.all([getEmployees(), getProjects()]);
+        setEmployees(empRes.data);
+        setProjects(projRes.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
   }, []);
 
   const handleChange = (e) => {
@@ -52,11 +58,11 @@ function AssignTask() {
         description: "",
         deadline: "",
       });
-    } 
-    catch(error) {
-  console.error("Full Backend Error:", error.response?.data);
-  alert(JSON.stringify(error.response?.data, null, 2));
-}
+    }
+    catch (error) {
+      console.error("Full Backend Error:", error.response?.data);
+      alert(JSON.stringify(error.response?.data, null, 2));
+    }
 
   };
 
@@ -78,7 +84,7 @@ function AssignTask() {
             <option value="">Select Project</option>
             {projects.map((p) => (
               <option key={p.id} value={p.id}>
-                {p.title}
+                {p.name}
               </option>
             ))}
           </select>
