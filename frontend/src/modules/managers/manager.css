@@ -398,6 +398,21 @@ input[type="radio"] {
   justify-content: space-between;
   gap: 16px;
   margin-bottom: 18px;
+
+/* Reduce heavy nested card layering when a table-card appears inside a form-card.
+   Make the inner-table-wrap the primary visible card while keeping spacing. */
+.form-card .table-card {
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+.form-card .table-card .inner-table-wrap {
+  background: #ffffff;
+  padding: 18px;
+  border-radius: 12px;
+  box-shadow: 0 8px 22px rgba(15,23,42,0.06);
+}
 }
 .teamlead-meta {
   display: flex;
@@ -427,7 +442,7 @@ input[type="radio"] {
   font-weight: 700;
   margin-right: 10px;
 }
-.row-with-avatar td {
+.row-with-avatar td:first-child {
   display: flex;
   align-items: center;
 }
@@ -448,4 +463,4 @@ input[type="radio"] {
 
 /* small touches */
 .simple-table tbody tr td:first-child { font-weight: 600; }
-.simple-table tbody tr td:nth-child(3) { color: #6b7280; font-size: 13px; }
+.simple-table tbody tr td:nth-child(2) { color: #6b7280; font-size: 13px; }

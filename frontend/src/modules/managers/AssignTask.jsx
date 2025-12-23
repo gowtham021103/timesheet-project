@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { assignTask } from "../../api/taskService";
+import { getEmployees } from "../../api/employeeService";
 import Sidebar from "./TeamLeadSidebar";
 import { employees as sampleEmployees } from "../../sample-data";
 
@@ -15,15 +16,33 @@ const AssignTask = () => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [fetching, setFetching] = useState(false);
+  const [isDummy, setIsDummy] = useState(false);
 
-  // Load employees from sample data
-  useEffect(() => {
+  const fetchEmployees = async () => {
     try {
-      setEmployees(sampleEmployees);
+      setFetching(true);
+      const res = await getEmployees();
+      setEmployees(res.data || []);
+      setIsDummy(false);
+      setError("");
     } catch (err) {
       console.error(err);
-      setError("Failed to load employees");
+      // fallback to sample data when backend is not available
+      setEmployees(sampleEmployees || []);
+      setIsDummy(true);
+      setError("Using dummy employee data (offline)");
+    } finally {
+      setFetching(false);
     }
+  };
+
+  useEffect(() => {
+    fetchEmployees();
+
+    const onUpdated = () => fetchEmployees();
+    window.addEventListener("employeesUpdated", onUpdated);
+    return () => window.removeEventListener("employeesUpdated", onUpdated);
   }, []);
 
   const handleChange = (e) => {
@@ -92,11 +111,14 @@ const AssignTask = () => {
               onChange={handleChange}
             >
               <option value="">Select Employee</option>
-              {employees.map((emp) => (
-                <option key={emp.id} value={emp.id}>
-                  {emp.name}
-                </option>
-              ))}
+              {employees.map((emp) => {
+                const displayName = emp.first_name || emp.name || emp.username || "Unnamed";
+                return (
+                  <option key={emp.id} value={emp.id}>
+                    {displayName}
+                  </option>
+                );
+              })}
             </select>
 
             <label>Due Date *</label>

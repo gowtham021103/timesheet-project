@@ -88,7 +88,6 @@ const Employees = () => {
                 <thead>
                   <tr>
                     <th>Name</th>
-                    <th>Email</th>
                     <th>Role</th>
                     <th>Actions</th>
                   </tr>
@@ -109,10 +108,12 @@ const Employees = () => {
                         <td>
                           <div style={{ display: "flex", alignItems: "center" }}>
                             <span className="avatar">{initials}</span>
-                            <span>{displayName}</span>
+                            <div>
+                              <div>{displayName}</div>
+                              <div className="muted" style={{ marginTop: 4 }}>{emp.email}</div>
+                            </div>
                           </div>
                         </td>
-                        <td>{emp.email}</td>
                         <td>{displayRole}</td>
                         <td>
                           <button
