@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from .models import User
 from .serializers import RegisterSerializer, LoginSerializer, UserSerializer
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAdminUser
+from rest_framework.permissions import IsAdminUser, BasePermission
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.generics import ListAPIView
@@ -82,10 +82,27 @@ class LogoutView(APIView):
             return Response({"detail": "Invalid token"}, status=400)
         
 
+
+# Allow admin, manager, and team_lead to view employees
+class IsAdminManagerOrTeamLead(BasePermission):
+    def has_permission(self, request, view):
+        return request.user.is_authenticated and (
+            request.user.role in ["admin", "manager", "team_lead"]
+        )
+
 class EmployeeListView(ListAPIView):
     queryset = User.objects.filter(role="employee")
     serializer_class = UserSerializer
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminManagerOrTeamLead]
 
     def get_queryset(self):
         return User.objects.filter(role="employee")
+
+# Manager list endpoint
+class ManagerListView(ListAPIView):
+    queryset = User.objects.filter(role="manager")
+    serializer_class = UserSerializer
+    permission_classes = [IsAdminManagerOrTeamLead]
+
+    def get_queryset(self):
+        return User.objects.filter(role="manager")

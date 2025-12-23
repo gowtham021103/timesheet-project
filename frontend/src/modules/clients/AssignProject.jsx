@@ -20,7 +20,7 @@ export default function AssignProject({ onAssigned, projects: propProjects, setP
   useEffect(() => {
     const loadManagers = async () => {
       try {
-        const res = await axiosClient.get("/managers"); // adjust endpoint if needed
+        const res = await axiosClient.get("/accounts/managers/");
         setManagers(res.data);
       } catch (err) {
         console.error("Failed to fetch managers", err);

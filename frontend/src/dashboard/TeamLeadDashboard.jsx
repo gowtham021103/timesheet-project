@@ -1,8 +1,14 @@
+import React from "react";
+import SidebarTeamLead from "../components/SidebarTeamLead";
+import { Outlet } from "react-router-dom";
+
 export default function TeamLeadDashboard() {
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-semibold">Team Lead Dashboard</h1>
-      <p className="mt-2 text-gray-600">Monitor team performance and task progress.</p>
+    <div style={{ display: "flex", minHeight: "100vh" }}>
+      <SidebarTeamLead />
+      <main style={{ flex: 1, padding: "2rem" }}>
+        <Outlet />
+      </main>
     </div>
   );
 }

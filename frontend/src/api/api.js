@@ -1,15 +1,39 @@
 import axios from "axios";
 
-const api = axios.create({
+// Create Axios instance
+const API = axios.create({
   baseURL: "http://localhost:8000/api",
 });
 
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("access");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
+// Attach JWT token if available
+API.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("access");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
-export default api;
+// =====================
+// API Calls
+// =====================
+
+// Employees
+export const getEmployees = () => API.get("/employees/");
+
+// Tasks
+export const getTasks = () => API.get("/tasks/");
+export const createTask = (data) => API.post("/tasks/", data);
+
+// Projects
+export const getProjects = () => API.get("/projects/");
+
+// Timesheets
+export const getTimesheets = () => API.get("/timesheets/");
+export const updateTimesheet = (id, data) =>
+  API.put(`/timesheets/${id}/`, data);
+
+export default API;

@@ -1,9 +1,12 @@
+
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthProvider";
+
 
 export default function Register() {
   const { register } = useAuth();
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     username: "",
     email: "",
@@ -17,6 +20,7 @@ export default function Register() {
   async function handleSubmit(e) {
     e.preventDefault();
     await register(form.username, form.email, form.password);
+    navigate("/login");
   }
 
   return (

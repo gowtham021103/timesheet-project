@@ -10,8 +10,8 @@ export default function TimesheetTable({ records }) {
       </thead>
 
       <tbody>
-        {records.map((r, index) => (
-          <tr key={index}>
+        {records.map((r) => (
+          <tr key={r.id || r.date+"-"+r.task}>
             <td className="border p-2">{r.date}</td>
             <td className="border p-2">{r.hours}</td>
             <td className="border p-2">{r.task}</td>

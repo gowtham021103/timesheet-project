@@ -85,7 +85,7 @@ export default function ViewTimesheets() {
                   </tr>
                 ) : (
                   filteredData.map((t) => (
-                    <tr key={t.id}>
+                    <tr key={t.id || t.date+"-"+t.task}>
                       <td className="employee-name">
                         {t.employee_name}
                       </td>

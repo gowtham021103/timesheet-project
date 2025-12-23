@@ -13,7 +13,7 @@ export default function EmployeeTable() {
   useEffect(() => {
     async function loadEmployees() {
       try {
-        const res = await axiosClient.get("employees/");
+        const res = await axiosClient.get("/accounts/employees/");
         setEmployees(res.data);
       } catch (err) {
         console.error("Failed to fetch employees", err);

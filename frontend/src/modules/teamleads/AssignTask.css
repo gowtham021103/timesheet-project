@@ -1,0 +1,69 @@
+.assign-task-container {
+  width: 500px;
+  margin: 40px auto;
+  padding: 25px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.assign-task-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 26px;
+  color: #333;
+}
+
+.assign-task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.assign-task-form label {
+  font-weight: bold;
+  color: #444;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.assign-task-form input,
+.assign-task-form select,
+.assign-task-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  font-size: 15px;
+  outline: none;
+  transition: border 0.2s ease-in-out;
+}
+
+.assign-task-form input:focus,
+.assign-task-form select:focus,
+.assign-task-form textarea:focus {
+  border-color: #007bff;
+}
+
+.assign-task-form textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+.assign-task-form button {
+  width: 100%;
+  padding: 12px;
+  background: #007bff;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.assign-task-form button:hover {
+  background: #0056b3;
+}

@@ -11,13 +11,17 @@ import AdminDashboard from "./dashboard/AdminDashboard";
 import ManagerDashboard from "./dashboard/ManagerDashboard";
 import EmployeeDashboard from "./dashboard/EmployeeDashboard";
 import ClientDashboard from "./dashboard/ClientDashboard";
+import TeamLeadDashboard from "./dashboard/TeamLeadDashboard";
 
 /* CLIENT MODULES */
 import CreateProject from "./modules/clients/CreateProject";
 import AssignProject from "./modules/clients/AssignProject";
 import ProjectList from "./modules/clients/ProjectList";
 import ClientReports from "./modules/clients/ClientReports";
+
 import AddEmployee from "./modules/clients/AddEmployee";
+import TeamLeadProjects from "./dashboard/TeamLeadProjects";
+import TeamLeadAssignTask from "./dashboard/TeamLeadAssignTask";
 
 /* TIMESHEETS */
 import TimesheetList from "./pages/TimesheetList";
@@ -44,6 +48,7 @@ export default function Router() {
     manager: "/manager",
     employee: "/employee",
     client_admin: "/client-dashboard",
+    team_lead: "/team-lead",
   };
 
   return (
@@ -72,6 +77,19 @@ export default function Router() {
         }
       />
 
+      {/* TEAM LEAD (with nested routes) */}
+      <Route
+        path="/team-lead"
+        element={
+          <ProtectedRoute allowed={["team_lead"]}>
+            <TeamLeadDashboard />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<div>Welcome, Team Lead!</div>} />
+        <Route path="projects" element={<TeamLeadProjects />} />
+        <Route path="assign-task" element={<TeamLeadAssignTask />} />
+      </Route>
       {/* CLIENT ADMIN (uses admin dashboard) */}
       <Route
         path="/client-admin"

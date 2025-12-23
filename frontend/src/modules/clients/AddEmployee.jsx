@@ -13,7 +13,7 @@ export default function AddEmployee() {
     async function loadEmployees() {
       setLoading(true);
       try {
-        const res = await axiosClient.get("/employees/"); // adjust endpoint
+        const res = await axiosClient.get("/accounts/employees/");
         setEmployees(res.data);
       } catch (err) {
         console.error("Failed to load employees", err);
@@ -33,7 +33,7 @@ export default function AddEmployee() {
 
     try {
       const payload = { username: newEmployeeName.trim() };
-      const res = await axiosClient.post("/employees/", payload); // adjust endpoint
+      const res = await axiosClient.post("/accounts/employees/", payload);
 
       // Update the employees list
       setEmployees((prev) => [...prev, res.data]);
