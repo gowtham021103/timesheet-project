@@ -5,6 +5,8 @@ import Sidebar from "./TeamLeadSidebar";
 import "./manager.css";
 import { employees as sampleEmployees } from "../../sample-data";
 
+/* This is a comment */
+
 const TeamLeadSelectionPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
