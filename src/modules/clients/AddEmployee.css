@@ -1,0 +1,55 @@
+.add-employee {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.existing-employees {
+  margin-bottom: 20px;
+}
+
+.existing-employees ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.existing-employees li {
+  background-color: #f9f9f9;
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.add-employee-form {
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+}
+
+.add-employee-form form div {
+  margin-bottom: 10px;
+}
+
+.add-employee-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.add-employee-form input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.add-employee-form button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-employee-form button:hover {
+  background-color: #0056b3;
+}

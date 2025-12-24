@@ -1,0 +1,130 @@
+/* ClientReports.css */
+
+.client-reports {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 30px 25px;
+  background: #fdfdfd;
+  border-radius: 15px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+.client-reports h2 {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #222;
+}
+
+.client-reports h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #444;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 6px;
+}
+
+.client-reports label {
+  font-weight: 500;
+  margin-bottom: 6px;
+  display: block;
+  color: #555;
+}
+
+.client-reports select,
+.client-reports input,
+.client-reports textarea {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 15px;
+  border: 1px solid #d0d0d0;
+  border-radius: 10px;
+  font-size: 15px;
+  transition: 0.2s;
+  background-color: #fafafa;
+}
+
+.client-reports select:focus,
+.client-reports input:focus,
+.client-reports textarea:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 6px rgba(59, 130, 246, 0.3);
+  outline: none;
+}
+
+.client-reports textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.client-reports button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  background-color: #3b82f6;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.client-reports button:hover:not(:disabled) {
+  background-color: #2563eb;
+}
+
+.client-reports button:disabled {
+  background-color: #a5b4fc;
+  cursor: not-allowed;
+}
+
+.client-reports ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 15px;
+}
+
+.client-reports li {
+  padding: 15px 18px;
+  margin-bottom: 12px;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  transition: 0.2s;
+}
+
+.client-reports li:hover {
+  background-color: #f3f4f6;
+}
+
+.client-reports li strong {
+  display: block;
+  font-weight: 600;
+  font-size: 15px;
+  color: #111827;
+}
+
+.client-reports li small {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.client-reports li div {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #374151;
+}
+
+.client-reports .loading,
+.client-reports .no-reports {
+  text-align: center;
+  font-style: italic;
+  margin-top: 10px;
+  color: #6b7280;
+}
