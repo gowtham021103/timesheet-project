@@ -29,6 +29,14 @@ class ProfileView(generics.RetrieveAPIView):
         serializer = UserSerializer(request.user)
         return Response(serializer.data)
     
+
+# Allow admin, manager, and team_lead to view employees
+class IsAdminManagerOrTeamLead(BasePermission):
+    def has_permission(self, request, view):
+        return request.user.is_authenticated and (
+            request.user.role in ["admin", "manager", "team_lead", "hr"]
+        )
+
 @api_view(["POST"])
 @permission_classes([IsAdminUser])
 def create_client_admin(request):
@@ -42,7 +50,7 @@ def create_client_admin(request):
     return Response({"message": "Client Admin created"})
 
 class CreateEmployeeView(APIView):
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminManagerOrTeamLead]
 
     def post(self, request):
         data = request.data
@@ -81,6 +89,7 @@ class LogoutView(APIView):
         except Exception:
             return Response({"detail": "Invalid token"}, status=400)
         
+
 
 
 # Allow admin, manager, and team_lead to view employees

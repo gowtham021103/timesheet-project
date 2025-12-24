@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FiMenu, FiX, FiLogOut } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
+/* import createEmployees from "./CreateEmployees"; */
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(true);
@@ -26,15 +27,28 @@ export default function Sidebar() {
       <nav className="sidebar-nav">
         
         <Link to="/" className="nav-item">
+          
           <span className="nav-label">Dashboard</span>
         </Link>
 
-        <Link to="/timesheets" className="nav-item">
-          <span className="nav-label">Create Timesheets</span>
+        <Link to="/teamleadselection" className="nav-item">
+          
+          <span className="nav-label">Team Lead Selection</span>
         </Link>
 
-        <Link to="/view-timesheets" className="nav-item">
-          <span className="nav-label">View Timesheet</span>
+        <Link to="/viewEmployees" className="nav-item">
+        
+          <span className="nav-label">Employees</span>
+        </Link>
+
+        <Link to="/assignTask" className="nav-item">
+          
+          <span className="nav-label">Assign Project</span>
+        </Link>
+
+        <Link to="/taskApprovals" className="nav-item">
+          
+          <span className="nav-label">Task Approvals</span>
         </Link>
 
         <button onClick={logout} className="nav-item logout-btn">
@@ -45,3 +59,4 @@ export default function Sidebar() {
     </aside>
   );
 }
+/* this is a comment */

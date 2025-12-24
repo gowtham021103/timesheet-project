@@ -1,0 +1,155 @@
+/* ===== Layout ===== */
+
+.w-full {
+  width: 100%;
+}
+
+.max-w-4xl {
+  max-width: 900px;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ===== Spacing ===== */
+
+.mb-8 {
+  margin-bottom: 32px;
+}
+
+.mt-1 {
+  margin-top: 4px;
+}
+
+.mt-2 {
+  margin-top: 8px;
+}
+
+.mt-4 {
+  margin-top: 16px;
+}
+
+.p-6 {
+  padding: 20px;
+}
+
+.gap-3 {
+  gap: 12px;
+}
+
+.gap-6 {
+  gap: 24px;
+}
+
+/* ===== Typography ===== */
+
+.text-4xl {
+  font-size: 32px;
+}
+
+.text-3xl {
+  font-size: 26px;
+}
+
+.text-2xl {
+  font-size: 22px;
+}
+
+.text-sm {
+  font-size: 14px;
+}
+
+.font-extrabold {
+  font-weight: 700;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.text-gray-900 {
+  color: #1f2937;
+}
+
+.text-gray-600 {
+  color: #4b5563;
+}
+
+.text-gray-500 {
+  color: #6b7280;
+}
+
+/* ===== Grid & Flex ===== */
+
+.grid {
+  display: grid;
+}
+
+.grid-cols-1 {
+  grid-template-columns: 1fr;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+/* Responsive layout */
+@media (min-width: 640px) {
+  .sm\:grid-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ===== Cards ===== */
+
+.bg-white {
+  background-color: #ffffff;
+}
+
+.shadow {
+  border: 1px solid #e5e7eb;
+}
+
+.rounded-lg {
+  border-radius: 6px;
+}
+
+/* ===== Status indicator ===== */
+
+.w-3 {
+  width: 10px;
+}
+
+.h-3 {
+  height: 10px;
+}
+
+.rounded-full {
+  border-radius: 50%;
+}
+
+.bg-green-500 {
+  background-color: #16a34a;
+}
+
+.bg-red-500 {
+  background-color: #dc2626;
+}

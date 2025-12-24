@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./timesheet.css";
 import axiosClient from "../api/axiosClient";
 
 function Timesheet() {
+  const navigate = useNavigate();
   const [date, setDate] = useState(new Date());
   const [hours, setHours] = useState("");
   const [task, setTask] = useState("");
@@ -44,7 +46,7 @@ function Timesheet() {
 
       setHours("");
       setTask("");
-      loadTimesheets(); // 🔄 refresh list
+      navigate("/view-timesheets"); // Redirect to view page
     } catch (err) {
       console.error("Failed to add timesheet", err);
     }

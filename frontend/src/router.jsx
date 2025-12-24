@@ -15,20 +15,30 @@ import TeamLeadDashboard from "./dashboard/TeamLeadDashboard";
 import TeamLeadHome from "./modules/teamleads/Dashboard";
 import HRDashboard from "./dashboard/HRDashboard";
 import HRHome from "./modules/hr/Dashboard";
-import HREmployees from "./modules/hr/HREmployees";
-import HRTimesheets from "./modules/hr/HRTimesheets";
-import HRPayroll from "./modules/hr/HRPayroll";
+
+/* ADMIN MODULES */
+import AdminClients from "./modules/admin/AdminClients";
+import ClientAccesses from "./modules/admin/ClientAccesses";
+import ViewAccesses from "./modules/admin/ViewAccesses";
 
 /* CLIENT MODULES */
+import TeamCreation from "./modules/clients/TeamCreation";
+import TeamView from "./modules/clients/TeamView";
 import CreateProject from "./modules/clients/CreateProject";
 import AssignProject from "./modules/clients/AssignProject";
 import ProjectList from "./modules/clients/ProjectList";
 import ClientReports from "./modules/clients/ClientReports";
-
 import AddEmployee from "./modules/clients/AddEmployee";
+
+/* TEAM LEAD MODULES */
 import TeamLeadProjects from "./modules/teamleads/TeamLeadProject";
 import TeamLeadAssignTask from "./modules/teamleads/AssignTask";
 import TeamLeadTasks from "./modules/teamleads/TeamLeadTask";
+
+/* HR MODULES */
+import HREmployees from "./modules/hr/HREmployees";
+import HRTimesheets from "./modules/hr/HRTimesheets";
+import HRPayroll from "./modules/hr/HRPayroll";
 
 /* TIMESHEETS */
 import TimesheetList from "./pages/TimesheetList";
@@ -47,10 +57,9 @@ import NotFound from "./pages/NotFound";
 
 export default function Router() {
   const { user, loading } = useAuth();
-
   if (loading) return null;
 
-  const roleDashboard = {
+  const roleRedirect = {
     admin: "/admin",
     manager: "/manager",
     employee: "/employee",
@@ -70,7 +79,7 @@ export default function Router() {
         path="/"
         element={
           user
-            ? <Navigate to={roleDashboard[user.role]} replace />
+            ? <Navigate to={roleRedirect[user.role]} replace />
             : <Navigate to="/login" replace />
         }
       />
@@ -84,8 +93,52 @@ export default function Router() {
           </ProtectedRoute>
         }
       />
+      <Route
+        path="/admin/clients"
+        element={
+          <ProtectedRoute allowed={["admin"]}>
+            <AdminClients />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/clients/accesses"
+        element={
+          <ProtectedRoute allowed={["admin"]}>
+            <ClientAccesses />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/clients/view-accesses"
+        element={
+          <ProtectedRoute allowed={["admin"]}>
+            <ViewAccesses />
+          </ProtectedRoute>
+        }
+      />
 
-      {/* TEAM LEAD (with nested routes) */}
+      {/* MANAGER */}
+      <Route
+        path="/manager"
+        element={
+          <ProtectedRoute allowed={["manager"]}>
+            <ManagerDashboard />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* EMPLOYEE */}
+      <Route
+        path="/employee"
+        element={
+          <ProtectedRoute allowed={["employee"]}>
+            <EmployeeDashboard />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* TEAM LEAD */}
       <Route
         path="/team-lead"
         element={
@@ -115,37 +168,7 @@ export default function Router() {
         <Route path="payroll" element={<HRPayroll />} />
       </Route>
 
-      {/* CLIENT ADMIN (uses admin dashboard) */}
-      <Route
-        path="/client-admin"
-        element={
-          <ProtectedRoute allowed={["client_admin"]}>
-            <AdminDashboard />
-          </ProtectedRoute>
-        }
-      />
-
-      {/* MANAGER */}
-      <Route
-        path="/manager"
-        element={
-          <ProtectedRoute allowed={["manager"]}>
-            <ManagerDashboard />
-          </ProtectedRoute>
-        }
-      />
-
-      {/* EMPLOYEE */}
-      <Route
-        path="/employee"
-        element={
-          <ProtectedRoute allowed={["employee"]}>
-            <EmployeeDashboard />
-          </ProtectedRoute>
-        }
-      />
-
-      {/* CLIENT (LAYOUT-BASED ROUTES) */}
+      {/* CLIENT (LAYOUT BASED) */}
       <Route
         element={
           <ProtectedRoute allowed={["client_admin"]}>
@@ -154,6 +177,8 @@ export default function Router() {
         }
       >
         <Route path="/client-dashboard" element={<ClientDashboard />} />
+        <Route path="/team-creation" element={<TeamCreation />} />
+        <Route path="/team-view" element={<TeamView />} />
         <Route path="/create-project" element={<CreateProject />} />
         <Route path="/assign-project" element={<AssignProject />} />
         <Route path="/project-list" element={<ProjectList />} />
@@ -164,38 +189,19 @@ export default function Router() {
       {/* TIMESHEETS */}
       <Route
         path="/timesheets"
-        element={
-          <ProtectedRoute>
-            <TimesheetList />
-          </ProtectedRoute>
-        }
+        element={<ProtectedRoute><TimesheetList /></ProtectedRoute>}
       />
-
       <Route
         path="/timesheets/new"
-        element={
-          <ProtectedRoute>
-            <TimesheetForm />
-          </ProtectedRoute>
-        }
+        element={<ProtectedRoute><TimesheetForm /></ProtectedRoute>}
       />
-
       <Route
         path="/timesheets/:id/edit"
-        element={
-          <ProtectedRoute>
-            <TimesheetForm editMode />
-          </ProtectedRoute>
-        }
+        element={<ProtectedRoute><TimesheetForm editMode /></ProtectedRoute>}
       />
-
       <Route
         path="/view-timesheets"
-        element={
-          <ProtectedRoute>
-            <ViewTimesheets />
-          </ProtectedRoute>
-        }
+        element={<ProtectedRoute><ViewTimesheets /></ProtectedRoute>}
       />
 
       {/* EMPLOYEES */}

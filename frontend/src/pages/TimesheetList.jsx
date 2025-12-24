@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import timesheetApi from "../api/timesheetApi";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./timesheet/timesheet.css";
@@ -10,21 +11,38 @@ export default function Timesheet() {
   const [hours, setHours] = useState("");
   const [task, setTask] = useState("");
   const [records, setRecords] = useState([]);
+  // Load timesheets from backend
+  const loadTimesheets = async () => {
+    try {
+      const data = await timesheetApi.list();
+      setRecords(data);
+    } catch (err) {
+      console.error("Failed to load timesheets", err);
+    }
+  };
+
+  useEffect(() => {
+    loadTimesheets();
+  }, []);
 
   const today = new Date();
   const fiveDaysAgo = new Date();
   fiveDaysAgo.setDate(today.getDate() - 5);
 
-  const handleAddRecord = () => {
+  const handleAddRecord = async () => {
     if (!hours || !task) return alert("Please fill all fields");
-
-    setRecords([
-      ...records,
-      { date: date.toDateString(), hours, task },
-    ]);
-
-    setHours("");
-    setTask("");
+    try {
+      await timesheetApi.create({
+        date: date.toISOString().split("T")[0],
+        hours,
+        task,
+      });
+      setHours("");
+      setTask("");
+      loadTimesheets();
+    } catch (err) {
+      alert("Failed to add timesheet");
+    }
   };
 
   const markedDates = records.map((r) => r.date);
