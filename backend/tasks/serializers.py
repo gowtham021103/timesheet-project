@@ -14,6 +14,9 @@ class TaskSerializer(serializers.ModelSerializer):
             "deadline",
             "status",
         ]
+        extra_kwargs = {
+            "project": {"required": False, "allow_null": True}
+        }
 
     # Ensure frontend sends integers, not arrays
     def validate_project(self, value):

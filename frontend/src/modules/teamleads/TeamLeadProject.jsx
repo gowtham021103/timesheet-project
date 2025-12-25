@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getProjects } from "../../api/api";
+import { getProjects } from "../../api/projectService";
 import "./Projects.css";
 
 export default function TeamLeadProject() {
@@ -47,7 +47,7 @@ export default function TeamLeadProject() {
                         style={{ gridTemplateColumns: "50px 1fr 150px" }}
                     >
                         <span>{project.id}</span>
-                        <span>{project.name}</span>
+                        <span>{project.title}</span>
                         <span>{project.team_lead}</span>
                     </div>
                 ))}

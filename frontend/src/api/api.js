@@ -34,7 +34,7 @@ export const getProjects = () => API.get("/projects/");
 // Timesheets
 export const getTimesheets = () => API.get("/timesheets/");
 export const updateTimesheet = (id, data) =>
-  API.put(`/timesheets/${id}/`, data);
+  API.patch(`/timesheets/${id}/`, data);
 
 // Payroll
 export const getPayroll = () => API.get("/payroll/");

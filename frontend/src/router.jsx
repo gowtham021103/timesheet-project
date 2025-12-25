@@ -16,6 +16,12 @@ import TeamLeadHome from "./modules/teamleads/Dashboard";
 import HRDashboard from "./dashboard/HRDashboard";
 import HRHome from "./modules/hr/Dashboard";
 
+import TeamLeadSelectionPage from "./modules/managers/TeamLeadSelection";
+import Employees from "./modules/managers/Employees";
+import AssignTask from "./modules/managers/AssignTask";
+import TaskApprovals from "./modules/managers/TaskApprovals";
+import TimesheetApprovals from "./modules/managers/TimesheetApprovals";
+
 /* ADMIN MODULES */
 import AdminClients from "./modules/admin/AdminClients";
 import ClientAccesses from "./modules/admin/ClientAccesses";
@@ -124,6 +130,46 @@ export default function Router() {
         element={
           <ProtectedRoute allowed={["manager"]}>
             <ManagerDashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/teamleadselection"
+        element={
+          <ProtectedRoute allowed={["manager"]}>
+            <TeamLeadSelectionPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/viewEmployees"
+        element={
+          <ProtectedRoute allowed={["manager"]}>
+            <Employees />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/assignTask"
+        element={
+          <ProtectedRoute allowed={["manager"]}>
+            <AssignTask />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/taskApprovals"
+        element={
+          <ProtectedRoute allowed={["manager"]}>
+            <TaskApprovals />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/timesheetApprovals"
+        element={
+          <ProtectedRoute allowed={["manager", "team_lead"]}>
+            <TimesheetApprovals />
           </ProtectedRoute>
         }
       />

@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { assignTask } from "../../api/taskService";
 import { getEmployees } from "../../api/employeeService";
 import Sidebar from "./TeamLeadSidebar";
-import { employees as sampleEmployees } from "../../sample-data";
+import "../../styles/layout.css";
+import "../../styles/EmployeeDashboard.css";
 
 import "./manager.css";
 
@@ -17,21 +18,18 @@ const AssignTask = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [fetching, setFetching] = useState(false);
-  const [isDummy, setIsDummy] = useState(false);
+
 
   const fetchEmployees = async () => {
     try {
       setFetching(true);
       const res = await getEmployees();
       setEmployees(res.data || []);
-      setIsDummy(false);
       setError("");
     } catch (err) {
       console.error(err);
-      // fallback to sample data when backend is not available
-      setEmployees(sampleEmployees || []);
-      setIsDummy(true);
-      setError("Using dummy employee data (offline)");
+      setEmployees([]);
+      setError("Failed to fetch employees");
     } finally {
       setFetching(false);
     }
@@ -64,7 +62,7 @@ const AssignTask = () => {
         title: taskData.title,
         description: taskData.description,
         assigned_to: taskData.employeeId,
-        due_date: taskData.dueDate,
+        deadline: taskData.dueDate, // Changed from due_date to deadline to match backend
       };
 
       await assignTask(payload);
@@ -79,10 +77,10 @@ const AssignTask = () => {
   };
 
   return (
-    <div className="app-layout">
+    <div className="layout">
       <Sidebar />
-      <div className="task-container">
-        <h2 className="page-heading">Assign Project</h2>
+      <div className="main">
+        <h2 className="welcome-text" style={{ textAlign: "left" }}>Assign Project</h2>
         {error && <p className="error-msg">{error}</p>}
 
         <div className="form-card">

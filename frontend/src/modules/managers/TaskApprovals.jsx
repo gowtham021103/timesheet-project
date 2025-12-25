@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { getTasks, updateTask } from "../../api/taskService";
+import "../../styles/layout.css";
+import "../../styles/EmployeeDashboard.css";
 import "./manager.css";
 import Sidebar from "./TeamLeadSidebar";
 
@@ -65,12 +67,12 @@ const TaskApprovals = () => {
   };
 
   return (
-    <div className="app-layout">
+    <div className="layout">
       <Sidebar />
 
-      <div className="task-container">
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <h2 className="page-heading">Task Approvals</h2>
+      <div className="main">
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: '20px' }}>
+          <h2 className="welcome-text" style={{ margin: 0 }}>Task Approvals</h2>
           <div>
             <button className="secondary-btn" onClick={fetchTasks}>Refresh</button>
           </div>

@@ -7,7 +7,11 @@ from .views import (
     create_client_admin,
     LogoutView,
     EmployeeListView,
+
     ManagerListView,
+    EmployeeDetailView,
+    ClientListView,
+    ClientDetailView,
 )
 from rest_framework_simplejwt.views import TokenRefreshView
 
@@ -20,9 +24,12 @@ urlpatterns = [
 
     # Employees
     path("employees/", EmployeeListView.as_view()),       # GET
+    path("employees/<int:pk>/", EmployeeDetailView.as_view()), # GET, PUT, DELETE
     path("managers/", ManagerListView.as_view()),         # GET
     path("employees/create/", CreateEmployeeView.as_view()),  # POST
 
     # Client admin
     path("create-client-admin/", create_client_admin),
+    path("admin/clients/", ClientListView.as_view()),
+    path("admin/clients/<int:pk>/", ClientDetailView.as_view()),
 ]

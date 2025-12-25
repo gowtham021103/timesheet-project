@@ -9,7 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["id", "username", "email", "role", "status"]
+        fields = ["id", "username", "email", "role", "company_name", "phone", "status"]
 
     def get_status(self, obj):
         return "Active" if obj.is_active else "Inactive"

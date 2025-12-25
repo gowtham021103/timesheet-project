@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getTasks } from "../../api/api";
+import { getTasks } from "../../api/taskService";
 import "./Projects.css";
 
 export default function TeamLeadTask() {

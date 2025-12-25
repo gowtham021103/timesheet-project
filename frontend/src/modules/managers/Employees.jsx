@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getEmployees, deleteEmployee } from "../../api/employeeService";
 import Sidebar from "./TeamLeadSidebar";
+import "../../styles/layout.css";
+import "../../styles/EmployeeDashboard.css";
 import "./manager.css";
 
 const Employees = () => {
@@ -81,24 +83,24 @@ const Employees = () => {
         if (Array.isArray(parsed) && parsed.length > 0) {
           setFilterIds(parsed.map(String));
         }
-        try { localStorage.removeItem("selectedEmployees"); } catch (e) {}
+        try { localStorage.removeItem("selectedEmployees"); } catch (e) { }
       }
-    } catch (e) {}
+    } catch (e) { }
   }, []);
 
   const displayList = filterIds && filterIds.length > 0
     ? employees.filter((e) => filterIds.indexOf(String(e.id)) !== -1)
     : employees;
 
-/* This is a comment */
-  return ( 
-    <div className="app-layout">
+  /* This is a comment */
+  return (
+    <div className="layout">
       <Sidebar />
 
-      <div className="task-container">
-        <div className="teamlead-header">
-          <div className="teamlead-meta">
-            <h2 className="teamlead-title">Employees</h2>
+      <div className="main">
+        <div style={{ marginBottom: "20px", display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div>
+            <h2 className="welcome-text" style={{ textAlign: 'left', margin: 0 }}>Employees</h2>
             <div className="teamlead-subtitle">Manage and view employee roles</div>
           </div>
           <div className="table-actions">
@@ -113,7 +115,7 @@ const Employees = () => {
                   // remove query param if present
                   try {
                     navigate('/viewEmployees', { replace: true });
-                  } catch (e) {}
+                  } catch (e) { }
                   fetchEmployees();
                 }}
               >
@@ -148,7 +150,7 @@ const Employees = () => {
                       .split(" ")
                       .map((s) => s[0])
                       .filter(Boolean)
-                      .slice(0,2)
+                      .slice(0, 2)
                       .join("");
 
                     return (

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Sidebar from "../modules/managers/TeamLeadSidebar";
-import "../styles/dashboard.css";
+import "../styles/layout.css";
+import "../styles/EmployeeDashboard.css";
 import { getEmployees } from "../api/employeeService";
 import { getTasks } from "../api/taskService";
 
@@ -45,18 +46,21 @@ const ManagerDashboard = () => {
   ];
 
   return (
-    <div className="dashboard-container">
+    <div className="layout">
+      {/* LEFT SIDEBAR */}
       <Sidebar />
 
-      <div className="dashboard-content">
+      {/* RIGHT MAIN CONTENT */}
+      <div className="main">
+        {/* You can add a Navbar here if you have one for Managers, or just the content */}
 
-        <h2 className="page-heading">Manager Dashboard Overview</h2>
+        <h2 className="welcome-text">Manager Dashboard Overview</h2>
 
-        <div className="stats-grid">
+        <div className="cards">
           {stats.map((item, index) => (
-            <div className="stat-card" key={index}>
-              <h3 className="stat-value">{loading ? "—" : item.value}</h3>
-              <p className="stat-title">{item.title}</p>
+            <div className="card" key={index}>
+              <h3 className="card-title">{item.title}</h3>
+              <p className="card-value">{loading ? "—" : item.value}</p>
             </div>
           ))}
         </div>

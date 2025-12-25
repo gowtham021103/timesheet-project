@@ -5,6 +5,11 @@ export const getTasks = () => {
   return axiosClient.get("tasks/");
 };
 
+// Get single task
+export const getTask = (id) => {
+  return axiosClient.get(`tasks/${id}/`);
+};
+
 // Assign a new task
 export const assignTask = (data) => {
   return axiosClient.post("tasks/", data);

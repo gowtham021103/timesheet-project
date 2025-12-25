@@ -12,7 +12,7 @@ export const createEmployee = (data) => {
 
 // Update employee
 export const updateEmployee = (id, data) => {
-  return axiosClient.put(`accounts/employees/${id}/`, data);
+  return axiosClient.patch(`accounts/employees/${id}/`, data);
 };
 
 // Delete employee

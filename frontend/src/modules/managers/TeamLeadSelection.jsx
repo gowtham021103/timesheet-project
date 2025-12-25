@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getEmployees, updateEmployee } from "../../api/employeeService";
 import Sidebar from "./TeamLeadSidebar";
+import "../../styles/layout.css";
+import "../../styles/EmployeeDashboard.css";
 import "./manager.css";
-import { employees as sampleEmployees } from "../../sample-data";
 
 /* This is a comment */
 
@@ -13,7 +14,6 @@ const TeamLeadSelectionPage = () => {
   const [employees, setEmployees] = useState([]);
   const [fetching, setFetching] = useState(false);
   const [selectedLead, setSelectedLead] = useState(null);
-  const [isDummy, setIsDummy] = useState(false);
   const [showOnlySelected, setShowOnlySelected] = useState(false);
   const navigate = useNavigate();
 
@@ -22,14 +22,11 @@ const TeamLeadSelectionPage = () => {
       setFetching(true);
       const res = await getEmployees();
       setEmployees(res.data || []);
-      setIsDummy(false);
       setError("");
     } catch (err) {
       console.error(err);
-      // fallback to sample data when backend is not available or user isn't connected
-      setEmployees(sampleEmployees || []);
-      setIsDummy(true);
-      setError("Using dummy employee data (offline)");
+      setEmployees([]);
+      setError("Failed to fetch employees");
     } finally {
       setFetching(false);
     }
@@ -44,42 +41,22 @@ const TeamLeadSelectionPage = () => {
     try {
       setLoading(true);
       setError("");
-      if (isDummy) {
-        // simulate setting team lead locally
-        setEmployees((prev) =>
-          prev.map((emp) => ({
-            ...emp,
-            role: emp.id == selectedLead ? "Team Lead" : emp.role === "Team Lead" ? "Employee" : emp.role,
-          }))
-        );
-        alert("(Dummy) Team Lead updated successfully!");
-        // notify other views
-        try {
-          localStorage.setItem("employeesUpdatedAt", Date.now().toString());
-        } catch (e) {}
-        try { localStorage.setItem("selectedEmployees", JSON.stringify([String(selectedLead)])); } catch (e) {}
-        window.dispatchEvent(new CustomEvent("employeesUpdated"));
-        // immediately show only this selected employee in the selection view
-        setEmployees((prev) => prev.filter((emp) => String(emp.id) === String(selectedLead)));
-        setShowOnlySelected(true);
-        // navigate and include selected id in query param for reliable filtering
-        navigate(`/viewEmployees?selected=${encodeURIComponent(String(selectedLead))}`);
-      } else {
-        // backend expects a role value; use lowercase 'team_lead' or backend-specific value
-        await updateEmployee(selectedLead, { role: "team_lead" });
-        alert("Team Lead updated successfully!");
-        fetchEmployees();
-        try {
-          localStorage.setItem("employeesUpdatedAt", Date.now().toString());
-        } catch (e) {}
-        try { localStorage.setItem("selectedEmployees", JSON.stringify([String(selectedLead)])); } catch (e) {}
-        window.dispatchEvent(new CustomEvent("employeesUpdated"));
-        // immediately filter selection UI to the chosen employee
-        setEmployees((prev) => prev.filter((emp) => String(emp.id) === String(selectedLead)));
-        setShowOnlySelected(true);
-        // navigate and include selected id in query param for reliable filtering
-        navigate(`/viewEmployees?selected=${encodeURIComponent(String(selectedLead))}`);
-      }
+
+      // backend expects a role value; use lowercase 'team_lead' or backend-specific value
+      await updateEmployee(selectedLead, { role: "team_lead" });
+      alert("Team Lead updated successfully!");
+      fetchEmployees();
+      try {
+        localStorage.setItem("employeesUpdatedAt", Date.now().toString());
+      } catch (e) { }
+      try { localStorage.setItem("selectedEmployees", JSON.stringify([String(selectedLead)])); } catch (e) { }
+      window.dispatchEvent(new CustomEvent("employeesUpdated"));
+      // immediately filter selection UI to the chosen employee
+      setEmployees((prev) => prev.filter((emp) => String(emp.id) === String(selectedLead)));
+      setShowOnlySelected(true);
+      // navigate and include selected id in query param for reliable filtering
+      navigate(`/viewEmployees?selected=${encodeURIComponent(String(selectedLead))}`);
+
     } catch (err) {
       console.error(err);
       setError("Failed to set Team Lead");
@@ -89,12 +66,12 @@ const TeamLeadSelectionPage = () => {
   };
 
   return (
-    <div className="app-layout">
+    <div className="layout">
       <Sidebar />
 
-      <div className="task-container">
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <h2 className="page-heading">Team Lead Selection</h2>
+      <div className="main">
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
+          <h2 className="welcome-text">Team Lead Selection</h2>
           <div>
             <button className="secondary-btn" onClick={fetchEmployees}>Refresh</button>
           </div>

@@ -159,11 +159,7 @@
 
 
 /* Assign Task */
-.task-container {
-  max-width: 700px;
-  margin-left: 50px;
-  
-}
+
 
 .form-card {
   background: #ffffff;
@@ -234,9 +230,10 @@
 
 
 .app-layout {
-  display: flex;
-  flex-direction: row;
-  
+  display: flex !important;
+  flex-direction: row !important;
+  min-height: 100vh;
+  width: 100%;
 }
 
 /* Team Lead Selection specific styles */
@@ -259,11 +256,19 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  box-shadow: 0 6px 18px rgba(37,99,235,0.12);
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.12);
   transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
 }
-.primary-btn:hover { transform: translateY(-2px); }
-.primary-btn:disabled { opacity: 0.6; cursor: not-allowed; box-shadow: none; }
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+}
+
+.primary-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
 
 .secondary-btn {
   background-color: #f3f4f6;
@@ -273,20 +278,23 @@
   border: 1px solid transparent;
   cursor: pointer;
 }
-.secondary-btn:hover { background-color: #e5e7eb; }
+
+.secondary-btn:hover {
+  background-color: #e5e7eb;
+}
 
 .form-card {
   background: #ffffff;
   padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(15,23,42,0.06);
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
 }
 
 .table-card {
   background: #ffffff;
   padding: 8px;
   border-radius: 10px;
-  box-shadow: 0 4px 14px rgba(15,23,42,0.06);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
   overflow: auto;
 }
 
@@ -295,7 +303,7 @@
   background: #f8fafc;
   padding: 16px;
   border-radius: 12px;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
 .simple-table {
@@ -304,6 +312,7 @@
   min-width: 640px;
   background: transparent;
 }
+
 .simple-table thead th {
   text-align: left;
   padding: 18px 22px;
@@ -314,19 +323,30 @@
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
+
 .simple-table tbody td {
   padding: 20px 22px;
   border-bottom: none;
   color: #111827;
   vertical-align: middle;
 }
+
 .simple-table tbody tr {
   background: #ffffff;
   border-radius: 8px;
 }
-.simple-table tbody tr + tr { margin-top: 12px; }
-.simple-table tbody tr td { border-bottom: 0; }
-.simple-table tbody tr:hover { background: #f3f6fb; }
+
+.simple-table tbody tr+tr {
+  margin-top: 12px;
+}
+
+.simple-table tbody tr td {
+  border-bottom: 0;
+}
+
+.simple-table tbody tr:hover {
+  background: #f3f6fb;
+}
 
 .simple-table .muted {
   display: block;
@@ -340,10 +360,12 @@
   display: table;
   width: 100%;
 }
+
 .table-card .inner-table-wrap .simple-table tbody {
   display: block;
   width: 100%;
 }
+
 .table-card .inner-table-wrap .simple-table tbody tr {
   display: table;
   table-layout: fixed;
@@ -352,13 +374,16 @@
 }
 
 /* radio center */
-td input[type="radio"] { transform: scale(1.1); }
+td input[type="radio"] {
+  transform: scale(1.1);
+}
 
 .simple-table {
   width: 100%;
   border-collapse: collapse;
   min-width: 640px;
 }
+
 .simple-table thead th {
   text-align: left;
   padding: 12px 16px;
@@ -367,18 +392,25 @@ td input[type="radio"] { transform: scale(1.1); }
   font-weight: 600;
   font-size: 14px;
 }
+
 .simple-table tbody td {
   padding: 12px 16px;
   border-bottom: 1px solid #eef2f7;
   color: #111827;
 }
-.simple-table tbody tr:hover { background: #fbfdff; }
 
-.highlight {
-  background: linear-gradient(90deg, rgba(37,99,235,0.06), rgba(99,102,241,0.02));
+.simple-table tbody tr:hover {
+  background: #fbfdff;
 }
 
-.error-msg { color: #dc2626; margin: 10px 0; }
+.highlight {
+  background: linear-gradient(90deg, rgba(37, 99, 235, 0.06), rgba(99, 102, 241, 0.02));
+}
+
+.error-msg {
+  color: #dc2626;
+  margin: 10px 0;
+}
 
 /* radio alignment */
 input[type="radio"] {
@@ -388,8 +420,13 @@ input[type="radio"] {
 
 /* Responsive adjustments */
 @media (max-width: 900px) {
-  .simple-table { min-width: 0; }
-  .task-container { padding: 0 12px; }
+  .simple-table {
+    min-width: 0;
+  }
+
+  .task-container {
+    padding: 0 12px;
+  }
 }
 
 /* Team Lead Selection header and card polish */
@@ -399,6 +436,7 @@ input[type="radio"] {
   justify-content: space-between;
   gap: 16px;
   margin-bottom: 18px;
+}
 
 /* Reduce heavy nested card layering when a table-card appears inside a form-card.
    Make the inner-table-wrap the primary visible card while keeping spacing. */
@@ -412,19 +450,21 @@ input[type="radio"] {
   background: #ffffff;
   padding: 18px;
   border-radius: 12px;
-  box-shadow: 0 8px 22px rgba(15,23,42,0.06);
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
 }
-}
+
 .teamlead-meta {
   display: flex;
   align-items: center;
   gap: 12px;
 }
+
 .teamlead-title {
   font-size: 22px;
   font-weight: 700;
   color: #0f172a;
 }
+
 .teamlead-subtitle {
   font-size: 13px;
   color: #6b7280;
@@ -435,7 +475,7 @@ input[type="radio"] {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: linear-gradient(135deg,#60a5fa,#6366f1);
+  background: linear-gradient(135deg, #60a5fa, #6366f1);
   color: white;
   display: inline-flex;
   align-items: center;
@@ -443,6 +483,7 @@ input[type="radio"] {
   font-weight: 700;
   margin-right: 10px;
 }
+
 .row-with-avatar td:first-child {
   display: flex;
   align-items: center;
@@ -463,8 +504,14 @@ input[type="radio"] {
 }
 
 /* small touches */
-.simple-table tbody tr td:first-child { font-weight: 600; }
-.simple-table tbody tr td:nth-child(2) { color: #6b7280; font-size: 13px; }
+.simple-table tbody tr td:first-child {
+  font-weight: 600;
+}
+
+.simple-table tbody tr td:nth-child(2) {
+  color: #6b7280;
+  font-size: 13px;
+}
 
 
 

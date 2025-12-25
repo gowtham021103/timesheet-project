@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
-import axiosClient from "../../api/axiosClient"; // make sure this exists
+import axiosClient from "../../api/axiosClient";
+import { updateProject } from "../../api/projectService";
 import "./AssignProject.css";
 
 export default function AssignProject({ onAssigned, projects: propProjects, setProjects: propSetProjects }) {
   const outlet = useOutletContext();
   const projects = propProjects ?? outlet?.projects ?? [];
-  const setProjects = propSetProjects ?? outlet?.setProjects ?? (() => {});
-  
+  const setProjects = propSetProjects ?? outlet?.setProjects ?? (() => { });
+
   const [assignableProjects, setAssignableProjects] = useState([]);
   const [managers, setManagers] = useState([]);
   const [selectedProject, setSelectedProject] = useState("");
@@ -37,7 +38,7 @@ export default function AssignProject({ onAssigned, projects: propProjects, setP
     setAssignableProjects(filtered);
   }, [projects]);
 
-  function handleAssign(e) {
+  async function handleAssign(e) {
     e.preventDefault();
 
     if (!selectedProject || !selectedManager) {
@@ -48,30 +49,39 @@ export default function AssignProject({ onAssigned, projects: propProjects, setP
     const assignedProject = assignableProjects.find(p => p.id === Number(selectedProject));
     const assignedManager = managers.find(m => m.id === Number(selectedManager));
 
-    const result = { project: assignedProject, manager: assignedManager, notes };
+    try {
+      await updateProject(assignedProject.id, {
+        team_lead: assignedManager.id
+      });
 
-    // Callback to parent
-    onAssigned && onAssigned(result);
+      const result = { project: assignedProject, manager: assignedManager, notes };
 
-    // Update global projects list
-    setProjects(prev =>
-      (prev || []).map(p =>
-        p.id === Number(selectedProject) ? { ...p, assignedTo: assignedManager.username } : p
-      )
-    );
+      // Callback to parent
+      onAssigned && onAssigned(result);
 
-    // Remove assigned project from local dropdown
-    setAssignableProjects(prev => prev.filter(p => p.id !== Number(selectedProject)));
+      // Update global projects list
+      setProjects(prev =>
+        (prev || []).map(p =>
+          p.id === Number(selectedProject) ? { ...p, team_lead: assignedManager.id, assignedTo: assignedManager.username } : p
+        )
+      );
 
-    // Show success message
-    setSuccess(`Project "${assignedProject.title}" assigned to ${assignedManager.username}!`);
-    setTimeout(() => setSuccess(null), 3000);
+      // Remove assigned project from local dropdown
+      setAssignableProjects(prev => prev.filter(p => p.id !== Number(selectedProject)));
 
-    // Reset form
-    setSelectedProject("");
-    setSelectedManager("");
-    setNotes("");
-    setError(null);
+      // Show success message
+      setSuccess(`Project "${assignedProject.title || assignedProject.name}" assigned to ${assignedManager.username}!`);
+      setTimeout(() => setSuccess(null), 3000);
+
+      // Reset form
+      setSelectedProject("");
+      setSelectedManager("");
+      setNotes("");
+      setError(null);
+    } catch (err) {
+      console.error("Assign project failed:", err);
+      setError("Failed to assign project. " + (err.response?.data?.detail || err.message));
+    }
   }
 
   return (

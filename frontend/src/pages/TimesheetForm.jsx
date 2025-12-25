@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import axiosClient from "../api/axiosClient";
+import { getTask } from "../api/taskService";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import Button from "../components/Button";
@@ -24,6 +25,21 @@ export default function TimesheetForm({ editMode = false }) {
       loadTimesheet();
     }
   }, [editMode, id]);
+
+  // Handle taskId query param for pre-filling
+  const [params] = useSearchParams();
+  const taskId = params.get("taskId");
+
+  useEffect(() => {
+    if (taskId && !editMode) {
+      // fetch task details
+      getTask(taskId)
+        .then((res) => {
+          setForm((prev) => ({ ...prev, task: res.data.title }));
+        })
+        .catch(err => console.error("Failed to fetch task details", err));
+    }
+  }, [taskId, editMode]);
 
   const loadTimesheet = async () => {
     try {

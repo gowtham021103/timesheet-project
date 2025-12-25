@@ -8,12 +8,20 @@ function TimesheetApproval() {
     getTimesheets().then((res) => setTimesheets(res.data));
   }, []);
 
-  const approve = (id) => {
-    updateTimesheet(id, { approved: true }).then(() => alert("Approved"));
+  const approve = async (id) => {
+    try {
+      await updateTimesheet(id, { approved: true });
+      setTimesheets(prev => prev.map(t => t.id === id ? { ...t, approved: true } : t));
+      alert("Approved");
+    } catch (e) { console.error(e); }
   };
 
-  const reject = (id) => {
-    updateTimesheet(id, { approved: false }).then(() => alert("Rejected"));
+  const reject = async (id) => {
+    try {
+      await updateTimesheet(id, { approved: false });
+      setTimesheets(prev => prev.map(t => t.id === id ? { ...t, approved: false } : t));
+      alert("Rejected/Revoked");
+    } catch (e) { console.error(e); }
   };
 
   return (
@@ -27,30 +35,48 @@ function TimesheetApproval() {
             <th>Employee</th>
             <th>Task</th>
             <th>Hours</th>
+            <th>Status</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {timesheets.map((ts) => (
             <tr key={ts.id}>
-              <td>{ts.employee}</td>
+              <td>{ts.employee_name || ts.employee}</td>
               <td>{ts.task}</td>
               <td>{ts.hours}</td>
               <td>
-                <button
-                  onClick={() => approve(ts.id)}
-                  className="status-badge active"
-                  style={{ border: 'none', cursor: 'pointer', marginRight: '5px' }}
-                >
-                  Approve
-                </button>
-                <button
-                  onClick={() => reject(ts.id)}
-                  className="status-badge leave"
-                  style={{ border: 'none', cursor: 'pointer' }}
-                >
-                  Reject
-                </button>
+                <span className={`status-badge ${ts.approved ? 'active' : 'pending'}`}>
+                  {ts.approved ? "Approved" : "Pending"}
+                </span>
+              </td>
+              <td>
+                {!ts.approved ? (
+                  <>
+                    <button
+                      onClick={() => approve(ts.id)}
+                      className="status-badge active"
+                      style={{ border: 'none', cursor: 'pointer', marginRight: '5px' }}
+                    >
+                      Approve
+                    </button>
+                    <button
+                      onClick={() => reject(ts.id)}
+                      className="status-badge leave"
+                      style={{ border: 'none', cursor: 'pointer' }}
+                    >
+                      Reject
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    onClick={() => reject(ts.id)}
+                    className="status-badge leave"
+                    style={{ border: 'none', cursor: 'pointer' }}
+                  >
+                    Revoke
+                  </button>
+                )}
               </td>
             </tr>
           ))}

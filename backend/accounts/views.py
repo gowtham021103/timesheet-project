@@ -11,6 +11,13 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.generics import ListAPIView
 
+# Allow admin, manager, and team_lead to view employees
+class IsAdminManagerOrTeamLead(BasePermission):
+    def has_permission(self, request, view):
+        return request.user.is_authenticated and (
+            request.user.role in ["admin", "manager", "team_lead", "hr"]
+        )
+
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = RegisterSerializer
@@ -28,20 +35,13 @@ class ProfileView(generics.RetrieveAPIView):
     def get(self, request):
         serializer = UserSerializer(request.user)
         return Response(serializer.data)
-    
 
-# Allow admin, manager, and team_lead to view employees
-class IsAdminManagerOrTeamLead(BasePermission):
-    def has_permission(self, request, view):
-        return request.user.is_authenticated and (
-            request.user.role in ["admin", "manager", "team_lead", "hr"]
-        )
 
 @api_view(["POST"])
 @permission_classes([IsAdminUser])
 def create_client_admin(request):
     data = request.data
-    user = User.objects.create_user(    
+    user = User.objects.create_user(
         username=data["username"],
         password=data["password"],
         role="client_admin",
@@ -49,21 +49,21 @@ def create_client_admin(request):
     )
     return Response({"message": "Client Admin created"})
 
+
 class CreateEmployeeView(APIView):
     permission_classes = [IsAdminManagerOrTeamLead]
 
     def post(self, request):
         data = request.data
-
         user = User.objects.create_user(
             username=data["username"],
             employee_id=data["employee_id"],
             password=data["password"],
             role=data.get("role", "employee"),
         )
-
         return Response({"message": "Employee created"})
-    
+
+
 class CreateClientAdminView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -88,24 +88,24 @@ class LogoutView(APIView):
             return Response({"detail": "Logged out"})
         except Exception:
             return Response({"detail": "Invalid token"}, status=400)
+
+    
+
+# Allow admin, manager, and team_lead to view employees
+
         
 
 
 
-# Allow admin, manager, and team_lead to view employees
-class IsAdminManagerOrTeamLead(BasePermission):
-    def has_permission(self, request, view):
-        return request.user.is_authenticated and (
-            request.user.role in ["admin", "manager", "team_lead", "hr"]
-        )
+
 
 class EmployeeListView(ListAPIView):
-    queryset = User.objects.filter(role="employee")
+    queryset = User.objects.filter(role__in=["employee", "team_lead"])
     serializer_class = UserSerializer
     permission_classes = [IsAdminManagerOrTeamLead]
 
     def get_queryset(self):
-        return User.objects.filter(role="employee")
+        return User.objects.filter(role__in=["employee", "team_lead"])
 
 # Manager list endpoint
 class ManagerListView(ListAPIView):
@@ -115,3 +115,27 @@ class ManagerListView(ListAPIView):
 
     def get_queryset(self):
         return User.objects.filter(role="manager")
+
+class EmployeeDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [IsAdminManagerOrTeamLead]
+
+class ClientListView(generics.ListCreateAPIView):
+    queryset = User.objects.filter(role="client_admin")
+    serializer_class = UserSerializer
+    permission_classes = [IsAdminUser]
+
+    def perform_create(self, serializer):
+        # Create user with default password or logic
+        # For simplicity, we are using the serializer's save which might not hash password if simple ModelSerializer
+        # We need to handle password hashing.
+        password = self.request.data.get("password", "Client@123")
+        instance = serializer.save(role="client_admin")
+        instance.set_password(password)
+        instance.save()
+
+class ClientDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = User.objects.filter(role="client_admin")
+    serializer_class = UserSerializer
+    permission_classes = [IsAdminUser]

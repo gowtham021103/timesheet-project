@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { getProjects, createTask, getEmployees } from "../../api/api";
+import { getProjects } from "../../api/projectService";
+import { getEmployees } from "../../api/employeeService";
+import { assignTask } from "../../api/taskService";
 import "./AssignTask.css";
 
 function AssignTask() {
@@ -40,7 +42,7 @@ function AssignTask() {
     e.preventDefault();
 
     const payload = {
-      project: Number(task.project),
+      project: Number(task.project) || null,
       assigned_to: Number(task.assigned_to),
       title: task.title,
       description: task.description,
@@ -48,7 +50,7 @@ function AssignTask() {
     };
 
     try {
-      await createTask(payload);
+      await assignTask(payload);
       alert("Task assigned successfully!");
 
       setTask({
@@ -61,7 +63,7 @@ function AssignTask() {
     }
     catch (error) {
       console.error("Full Backend Error:", error.response?.data);
-      alert(JSON.stringify(error.response?.data, null, 2));
+      alert(typeof error.response?.data === 'string' ? error.response.data : JSON.stringify(error.response?.data, null, 2));
     }
 
   };
@@ -84,7 +86,7 @@ function AssignTask() {
             <option value="">Select Project</option>
             {projects.map((p) => (
               <option key={p.id} value={p.id}>
-                {p.name}
+                {p.title || p.name}
               </option>
             ))}
           </select>
@@ -102,7 +104,7 @@ function AssignTask() {
             <option value="">Select Employee</option>
             {employees.map((emp) => (
               <option key={emp.id} value={emp.id}>
-                {emp.name} ({emp.department})
+                {emp.username || emp.name} ({emp.role})
               </option>
             ))}
           </select>

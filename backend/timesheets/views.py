@@ -20,6 +20,9 @@ class TimesheetViewSet(viewsets.ModelViewSet):
         user = self.request.user
         if user.role in ['hr', 'admin', 'manager', 'team_lead']:
             return Timesheet.objects.all()
+        if user.role == 'client_admin':
+            # Filter timesheets for tasks in projects owned by this client
+            return Timesheet.objects.filter(task__project__client=user)
         return Timesheet.objects.filter(employee=user)
 
     def perform_create(self, serializer):
