@@ -4,9 +4,9 @@ from .models import Timesheet
 class TimesheetSerializer(serializers.ModelSerializer):
     employee_name = serializers.SerializerMethodField(read_only=True)
 
-    project_id = serializers.IntegerField(source='task.project.id', read_only=True)
-    task_title = serializers.CharField(source='task.title', read_only=True)
-    project_title = serializers.CharField(source='task.project.name', read_only=True)
+    project_id = serializers.SerializerMethodField(read_only=True)
+    task_title = serializers.CharField(source='task', read_only=True)
+    project_title = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Timesheet
@@ -15,3 +15,11 @@ class TimesheetSerializer(serializers.ModelSerializer):
 
     def get_employee_name(self, obj):
         return str(obj.employee)
+
+    def get_project_id(self, obj):
+        # Current Timesheet model does not have a project link
+        return None
+
+    def get_project_title(self, obj):
+        # Current Timesheet model does not have a project link
+        return "N/A"
